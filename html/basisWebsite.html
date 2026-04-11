@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>WattWise Duurzaamheidsmeter</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="../css/style.css">
+
+  <script src="../javascript/script.js" defer></script>
+</head>
+
+<body>
+
+  <!-- ================================================
+      HEADER
+  ================================================= -->
+  <header>
+    <span class="leaf">🌿</span>
+    <h1>WattWise Duurzaamheidsmeter – Mijn Huis</h1>
+  </header>
+
+  <!-- ================================================
+      BREADCRUMB
+  ================================================= -->
+  <div id="breadcrumb">
+    <span class="crumb" onclick="toonHuis()">🏠 Huis</span>
+    <span id="bc-kamer" style="display:none"> › <span class="crumb" id="bc-kamer-naam"></span></span>
+    <span id="bc-toestel" style="display:none"> › <span id="bc-toestel-naam"></span></span>
+  </div>
+
+  <!-- ================================================
+      MAIN
+  ================================================= -->
+  <main>
+
+    <!-- ============================================
+        SCHERM 1 – HUIS
+    ============================================= -->
+    <section id="scherm-huis">
+      <h2>Klik op een kamer</h2>
+      <p>Selecteer een ruimte om te ontdekken hoeveel energie je toestellen verbruiken.</p>
+
+      <svg id="huis" viewBox="0 0 540 300">
+
+        <g class="kamer-boxSVG" data-kamer="woonkamer">
+          <rect x="10" y="130" width="200" height="120"/> <!-- pas x en y positie aan zoals je wil-->
+          <text x="110" y="190" text-anchor="middle" dominant-baseline="middle">
+            🛋️ Woonkamer
+          </text>
+        </g>
+
+        <g class="kamer-boxSVG" data-kamer="keuken">
+          <rect x="220" y="130" width="150" height="120"/>
+          <text x="295" y="190" text-anchor="middle" dominant-baseline="middle">
+            🍳 Keuken
+          </text>
+        </g>
+
+        <g class="kamer-boxSVG" data-kamer="badkamer">
+          <rect x="350" y="20" width="150" height="100"/>
+          <text x="425" y="70" text-anchor="middle" dominant-baseline="middle">
+            🚿 Badkamer
+          </text>
+        </g>
+
+        <g class="kamer-boxSVG" data-kamer="slaapkamer">
+          <rect x="30" y="20" width="200" height="100"/>
+          <text x="130" y="70" text-anchor="middle" dominant-baseline="middle">
+            🛏️ Slaapkamer
+          </text>
+        </g>
+
+        <g class="kamer-boxSVG" data-kamer="berging">
+          <rect x="240" y="20" width="100" height="100"/>
+          <text x="290" y="70" text-anchor="middle" dominant-baseline="middle">
+            📦 Berging
+          </text>
+        </g>
+
+        <g class="kamer-boxSVG" data-kamer="garage">
+          <rect x="380" y="130" width="150" height="120"/>
+          <text x="455" y="190" text-anchor="middle" dominant-baseline="middle">
+            🚗 Garage
+          </text>
+        </g>
+
+      </svg>
+
+      
+    </section><!-- /#scherm-huis -->
+
+
+    <!-- ============================================
+        SCHERM 2 – KAMER (toestellen)
+    ============================================= -->
+    <section id="scherm-kamer">
+
+      <button id="btn-terug-huis" onclick="toonHuis()">← Terug naar huis</button>
+      <h2 id="kamer-titel">Kamer</h2>
+      <p class="kamer-intro" id="kamer-intro"></p>
+
+      <!-- Kamer afbeelding + toestel-klikboxen -->
+      <div id="kamer-beeld">
+        <!-- Placeholder -->
+        <div id="kamer-placeholder" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:var(--groen);font-weight:700;text-align:center;pointer-events:none;">
+          📷 Kamer-afbeelding<br/><small>(voeg je kamer-foto toe via CSS)</small>
+        </div>
+        <!-- Toestel-klikboxen worden dynamisch ingevoegd door JS -->
+      </div>
+
+    </section><!-- /#scherm-kamer -->
+
+  </main><!-- /main -->
+
+
+  <!-- ================================================
+      MODAAL – parameters, resultaat, tips
+  ================================================= -->
+  <div id="modal-overlay">
+    <div id="modal">
+      <div id="modal-header">
+        <h3 id="modal-titel">Toestel</h3>
+        <button id="modal-sluiten" onclick="sluitModal()" title="Sluiten">✕</button>
+      </div>
+      <div id="modal-body">
+
+        <!-- STAP 1 – parameters -->
+        <div id="stap-parameters">
+          <div id="parameters-container">
+            <!-- Wordt dynamisch ingevuld door JS op basis van KAMERS_DATA -->
+          </div>
+          <button id="btn-bereken" onclick="berekenVerbruik()">⚡ Bereken mijn verbruik</button>
+        </div>
+
+        <!-- STAP 2 – resultaat -->
+        <div id="stap-resultaat">
+          <div id="resultaat-box">
+            <div class="resultaat-label">Jouw dagelijks verbruik</div>
+            <div id="resultaat-getal">–</div>
+            <div id="resultaat-eenheid">kWh per dag</div>
+          </div>
+          <div class="modal-nav">
+            <button class="btn-terug" onclick="toonStap('parameters')">← Aanpassen</button>
+            <button class="btn-verder" onclick="toonStap('tips')">Tips bekijken →</button>
+          </div>
+        </div>
+
+        <!-- STAP 3 – tips & weetjes -->
+        <div id="stap-tips">
+          <div id="gemiddelde-box" id="gemiddelde-inhoud">
+            <!-- Wordt gevuld door JS -->
+          </div>
+          <div id="tips-box">
+            <h4>💡 Tips & weetjes</h4>
+            <ul id="tips-lijst">
+              <!-- Wordt gevuld door JS -->
+            </ul>
+          </div>
+          <div class="modal-nav">
+            <button class="btn-terug" onclick="toonStap('resultaat')">← Resultaat</button>
+            <button class="btn-afsluiten" onclick="sluitModal()">✓ Sluiten</button>
+          </div>
+        </div>
+
+      </div><!-- /#modal-body -->
+    </div><!-- /#modal -->
+  </div><!-- /#modal-overlay -->
+
+  <footer>
+    <!--Attributie MOET VOOR ICONS-->
+    <!-- <div>Icons made by <a href="https://www.flaticon.com/authors/eucalyp" title="Eucalyp">Eucalyp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">prettycons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/nikita-golubev" title="Nikita Golubev">Nikita Golubev</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/surang" title="surang">surang</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/kmg-design" title="kmg design">kmg design</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/flat-icons" title="Flat Icons">Flat Icons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/konkapp" title="Konkapp">Konkapp</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/nawicon" title="nawicon">nawicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/wanicon" title="wanicon">wanicon</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/dmytro-vyshnevskyi" title="Dmytro Vyshnevskyi">Dmytro Vyshnevskyi</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/mudassir-designs" title="Mudassir designs">Mudassir designs</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/good-ware" title="Good Ware">Good Ware</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/vectorportal" title="VectorPortal">VectorPortal</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/mihimihi" title="Mihimihi">Mihimihi</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div><div>Icons made by <a href="https://www.flaticon.com/authors/boris-farias" title="Boris farias">Boris farias</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -->
+  </footer>
+
+</body>
+</html>
