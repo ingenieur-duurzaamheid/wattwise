@@ -218,20 +218,20 @@
     ============================================= */
     .toestel-box {
       position: absolute;
-      background: rgba(249,199,79,.22);
-      border: 2px dashed var(--geel);
-      border-radius: 8px;
+      /* background: rgba(249,199,79,.22); */
+      /* border: 2px dashed var(--geel); */
+      /* border-radius: 8px; */
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       font-size: .78rem;
       font-weight: 700;
-      color: #7a4f00;
+      /* color: #7a4f00; */
       transition: background .2s, transform .15s;
     }
     .toestel-box:hover {
-      background: rgba(249,199,79,.55);
+      /* background: rgba(249,199,79,.55); */
       transform: scale(1.04);
     }
     .toestel-box .toestel-label {
@@ -247,7 +247,6 @@
       object-fit: contain;
       pointer-events: none;
       /* Verwijder opacity als je echte afbeelding goed zichtbaar is */
-      opacity: .6;
     }
 
     /* =============================================
@@ -456,6 +455,9 @@
       fill: rgba(82, 183, 136, 0.3);
       stroke: #52b788;
       stroke-width: 2;
+      stroke-dasharray: 6 4;
+      rx: 10;
+      ry: 10;
       cursor: pointer;
       transition: 0.2s;
     }
@@ -470,4 +472,12 @@
       font-weight: bold;
       fill: #2d6a4f;
       pointer-events: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
     }

@@ -41,7 +41,7 @@ const KAMERS_DATA = {
       {
         id: "woonkamer_tv",
         label: "Televisie",
-        afbeelding: "img/toestellen/tv.png", // ← vervang door jouw bestandspad
+        afbeelding: "../icons/png/023-television.png", // ← vervang door jouw bestandspad
         positie: { top:"30%", left:"5%", width:"20%", height:"35%" },
 
         parameters: [
@@ -357,7 +357,7 @@ const KAMERS_DATA = {
       {
         id: "keuken_koelkast",
         label: "Koelkast",
-        afbeelding: "img/toestellen/koelkast.png",
+        afbeelding: "../icons/png/015-refrigerator-1.png",
         positie: { top:"10%", left:"5%", width:"15%", height:"70%" },
 
         parameters: [
@@ -410,7 +410,7 @@ const KAMERS_DATA = {
       {
         id: "keuken_vaatwasser",
         label: "Vaatwasser",
-        afbeelding: "img/toestellen/vaatwasser.png",
+        afbeelding: "../icons/png/026-dishwasher-1.png",
         positie: { top:"10%", left:"25%", width:"15%", height:"70%" },
         parameters: [
           {
@@ -454,7 +454,7 @@ const KAMERS_DATA = {
       {
         id: "keuken_microgolf",
         label: "Microgolfoven",
-        afbeelding: "img/toestellen/microgolf.png",
+        afbeelding: "../icons/png/029-oven.png",
         positie: { top:"10%", left:"45%", width:"20%", height:"35%" },
         parameters: [
           {
@@ -495,7 +495,7 @@ const KAMERS_DATA = {
 
       /* TOESTEL 4 – SLOT */
       {
-        id: "keuken_slot4", label:"Toestel 4", afbeelding:"img/toestellen/keuken_slot4.png",
+        id: "keuken_slot4", label:"Toestel 4", afbeelding:"../icons/png/007-mixer-blender-1.png",
         positie: { top:"50%", left:"45%", width:"20%", height:"35%" },
         parameters: [
           { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
@@ -514,84 +514,84 @@ const KAMERS_DATA = {
       },
 
       /* TOESTEL 5 – SLOT */
-      {
-        id: "keuken_slot5", label:"Toestel 5", afbeelding:"img/toestellen/keuken_slot5.png",
-        positie: { top:"10%", left:"70%", width:"15%", height:"35%" },
-        parameters: [
-          { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
-          { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
-          // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
-        ],
-        berekenVerbruik: function(params) {
-          return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
-        },
-        eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
-      },
+      // {
+      //   id: "keuken_slot5", label:"Toestel 5", afbeelding:"img/toestellen/keuken_slot5.png",
+      //   positie: { top:"10%", left:"70%", width:"15%", height:"35%" },
+      //   parameters: [
+      //     { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
+      //     { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
+      //     // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //   ],
+      //   berekenVerbruik: function(params) {
+      //     return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
+      //   },
+      //   eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
+      // },
 
       /* TOESTEL 6 – SLOT */
-      {
-        id: "keuken_slot6", label:"Toestel 6", afbeelding:"img/toestellen/keuken_slot6.png",
-        positie: { top:"50%", left:"70%", width:"15%", height:"35%" },
-        parameters: [
-          { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
-          { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
-          // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
-        ],
-        berekenVerbruik: function(params) {
-          return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
-        },
-        eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
-      },
+      // {
+      //   id: "keuken_slot6", label:"Toestel 6", afbeelding:"img/toestellen/keuken_slot6.png",
+      //   positie: { top:"50%", left:"70%", width:"15%", height:"35%" },
+      //   parameters: [
+      //     { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
+      //     { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
+      //     // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //   ],
+      //   berekenVerbruik: function(params) {
+      //     return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
+      //   },
+      //   eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
+      // },
 
       /* TOESTEL 7 – SLOT */
-      {
-        id: "keuken_slot7", label:"Toestel 7", afbeelding:"img/toestellen/keuken_slot7.png",
-        positie: { top:"10%", left:"88%", width:"10%", height:"35%" },
-        parameters: [
-          { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
-          { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
-          // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
-        ],
-        berekenVerbruik: function(params) {
-          return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
-        },
-        eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
-      },
+      // {
+      //   id: "keuken_slot7", label:"Toestel 7", afbeelding:"img/toestellen/keuken_slot7.png",
+      //   positie: { top:"10%", left:"88%", width:"10%", height:"35%" },
+      //   parameters: [
+      //     { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
+      //     { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
+      //     // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter8", label:"Naam parameter 8", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //   ],
+      //   berekenVerbruik: function(params) {
+      //     return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
+      //   },
+      //   eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
+      // },
 
       /* TOESTEL 8 – SLOT */
-      {
-        id: "keuken_slot8", label:"Toestel 8", afbeelding:"img/toestellen/keuken_slot8.png",
-        positie: { top:"50%", left:"88%", width:"10%", height:"35%" },
-        parameters: [
-          { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
-          { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
-          // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
-          // { id:"parameter8", label:"Naam parameter 8", type:"nummer", min:0, max:100, stap:1, eenheid:"" },
-        ],
-        berekenVerbruik: function(params) {
-          return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
-        },
-        eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
-      },
+      // {
+      //   id: "keuken_slot8", label:"Toestel 8", afbeelding:"img/toestellen/keuken_slot8.png",
+      //   positie: { top:"50%", left:"88%", width:"10%", height:"35%" },
+      //   parameters: [
+      //     { id:"parameter1", label:"Parameter 1", type:"select", opties:[["Type A",0],["Type B",10]] },
+      //     { id:"parameter2", label:"Uren per dag", type:"number", min:0, max:24, stap:0.5, eenheid:"uur" },
+      //     // { id:"parameter3", label:"Naam parameter 3", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter4", label:"Naam parameter 4", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter5", label:"Naam parameter 5", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter6", label:"Naam parameter 6", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter7", label:"Naam parameter 7", type:"number", min:0, max:100, stap:1, eenheid:"" },
+      //     // { id:"parameter8", label:"Naam parameter 8", type:"nummer", min:0, max:100, stap:1, eenheid:"" },
+      //   ],
+      //   berekenVerbruik: function(params) {
+      //     return Math.round((parseFloat(params.parameter1)||0)*(parseFloat(params.parameter2)||0)/1000*100)/100;
+      //   },
+      //   eenheid:"kWh per dag", gemiddelde:"← gemiddelde voor gebruiker.", tips:["← Tip 1","← Tip 2"],
+      // },
 
     ], // ← EINDE toestellen keuken
   }, // ← EINDE KAMER keuken
@@ -663,14 +663,14 @@ const KAMERS_DATA = {
     label: "Berging",
     intro: "Bekijk het energieverbruik van toestellen in de berging.",
     toestellen: [
-      { id:"berging_slot1",label:"Toestel 1",afbeelding:"img/toestellen/berging_slot1.png",positie:{top:"20%",left:"5%", width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot2",label:"Toestel 2",afbeelding:"img/toestellen/berging_slot2.png",positie:{top:"20%",left:"26%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot3",label:"Toestel 3",afbeelding:"img/toestellen/berging_slot3.png",positie:{top:"20%",left:"47%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot4",label:"Toestel 4",afbeelding:"img/toestellen/berging_slot4.png",positie:{top:"20%",left:"68%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot5",label:"Toestel 5",afbeelding:"img/toestellen/berging_slot5.png",positie:{top:"60%",left:"5%", width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot6",label:"Toestel 6",afbeelding:"img/toestellen/berging_slot6.png",positie:{top:"60%",left:"26%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot7",label:"Toestel 7",afbeelding:"img/toestellen/berging_slot7.png",positie:{top:"60%",left:"47%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
-      { id:"berging_slot8",label:"Toestel 8",afbeelding:"img/toestellen/berging_slot8.png",positie:{top:"60%",left:"68%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      { id:"berging_slot1",label:"Toestel 1",afbeelding:"../icons/png/016-washing-machine-3.png",positie:{top:"20%",left:"5%", width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      { id:"berging_slot2",label:"Toestel 2",afbeelding:"../icons/png/021-dryer.png",positie:{top:"20%",left:"26%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      { id:"berging_slot3",label:"Toestel 3",afbeelding:"../icons/png/014-vacuum-cleaner.png",positie:{top:"20%",left:"47%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      // { id:"berging_slot4",label:"Toestel 4",afbeelding:"img/toestellen/berging_slot4.png",positie:{top:"20%",left:"68%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      // { id:"berging_slot5",label:"Toestel 5",afbeelding:"img/toestellen/berging_slot5.png",positie:{top:"60%",left:"5%", width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      // { id:"berging_slot6",label:"Toestel 6",afbeelding:"img/toestellen/berging_slot6.png",positie:{top:"60%",left:"26%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      // { id:"berging_slot7",label:"Toestel 7",afbeelding:"img/toestellen/berging_slot7.png",positie:{top:"60%",left:"47%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
+      // { id:"berging_slot8",label:"Toestel 8",afbeelding:"img/toestellen/berging_slot8.png",positie:{top:"60%",left:"68%",width:"16%",height:"35%"},parameters:[{id:"parameter1",label:"Parameter 1",type:"select",opties:[["Type A",0],["Type B",10]]},{id:"parameter2",label:"Uren per dag",type:"number",min:0,max:24,stap:0.5,eenheid:"uur"}],berekenVerbruik:function(p){return Math.round((parseFloat(p.parameter1)||0)*(parseFloat(p.parameter2)||0)/1000*100)/100;},eenheid:"kWh per dag",gemiddelde:"← gemiddelde.",tips:["← Tip 1"]},
     ],
   }, // ← EINDE KAMER berging
 
@@ -712,7 +712,7 @@ let huidigToestel = null;
 
 /* ── Schermnavigatie ── */
 function toonHuis() {
-  document.getElementById('scherm-huis').style.display  = '';
+  document.getElementById('scherm-huis').style.display  = 'block';
   document.getElementById('scherm-kamer').style.display = 'none';
   sluitModal();
   document.getElementById('bc-kamer').style.display   = 'none';
@@ -736,7 +736,7 @@ function toonKamer(kamerId) {
 
   // schermen wisselen
   document.getElementById('scherm-huis').style.display  = 'none';
-  document.getElementById('scherm-kamer').style.display = '';
+  document.getElementById('scherm-kamer').style.display = 'block';
 
   // kamer-beeld class voor CSS achtergrond
   const beeld = document.getElementById('kamer-beeld');
