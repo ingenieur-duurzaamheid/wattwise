@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WattWise – Duurzaamheidsmeter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+   <link rel="stylesheet" href="../css/style3.css">
+
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">⚡</div>
+    <h1>Watt<span>Wise</span></h1>
+  </div>
+  <div class="hdr-badge">🌿 Duurzaamheidsmeter</div>
+</header>
+
+<div id="breadcrumb">
+  <span class="crumb" onclick="toonHuis()">🏠 Huis</span>
+  <span id="bc-kamer" style="display:none"><span class="bc-sep"> › </span><span class="crumb" id="bc-kamer-naam"></span></span>
+  <span id="bc-toestel" style="display:none"><span class="bc-sep"> › </span><span id="bc-toestel-naam"></span></span>
+</div>
+
+<main>
+
+  <!-- SCHERM 1: HUIS -->
+  <section id="scherm-huis">
+    <div class="page-intro">
+      <div class="page-intro-text">
+        <h2>Hoeveel energie verbruikt <em style="color:var(--g3);font-style:normal;">jouw huis?</em></h2>
+        <p>Klik op een kamer in het huis om te ontdekken welke toestellen energie verbruiken.</p>
+      </div>
+      <div class="stats-strip">
+        <div class="stat-badge"><div class="stat-badge-num">8.5</div><div class="stat-badge-lbl">kWh/dag<br>gemiddeld</div></div>
+        <div class="stat-badge"><div class="stat-badge-num">€0.28</div><div class="stat-badge-lbl">per kWh<br>tarief</div></div>
+        <div class="stat-badge"><div class="stat-badge-num">6</div><div class="stat-badge-lbl">kamers<br>te verkennen</div></div>
+      </div>
+    </div>
+
+    <div class="house-wrap" id="house-wrap">
+
+      <img id="house-img" class="house-img" src="../icons/image/house_background_sharp.png"  srcset="../icons/image/house_background_sharp_embedded.svg"  alt="Doorsnede huis"/>
+     <!-- <div class="kamer-overlay kamer-links-boven" data-kamer="kamer-links-boven"></div> -->
+     <div class="kamer-overlay kamer-rechts-boven" data-kamer="kamer-rechts-boven"></div>
+     <div class="kamer-overlay kamer-links-midden" data-kamer="kamer-links-midden"></div>
+
+      <!-- kamer overlays worden door JS ingevoegd -->
+      <div class="zoom-overlay" id="zoom-overlay"></div>
+      
+    </div>
+
+    <p style="text-align:center;margin-top:14px;font-size:.8rem;color:var(--muted);font-family:'Nunito',sans-serif;">
+      💡 Beweeg over het huis en klik op een kamer om te beginnen
+    </p>
+  </section>
+
+  <!-- SCHERM 2: KAMER -->
+  <section id="scherm-kamer">
+    <div class="kamer-top">
+      <button id="btn-terug" onclick="toonHuis()">← Terug</button>
+      <div class="kamer-title-block">
+        <h2 id="kamer-titel">Kamer</h2>
+        <p id="kamer-intro"></p>
+      </div>
+    </div>
+
+    <div class="kamer-scene" id="kamer-scene">
+      <div class="kamer-scene-bg" id="kamer-scene-bg"></div>
+      <div class="kamer-floor" id="kamer-floor"></div>
+      <div class="room-label-badge" id="room-label-badge"></div>
+      <!-- appliances worden door JS ingevoegd -->
+    </div>
+  </section>
+
+</main>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div id="modal">
+    <div class="modal-head">
+      <div class="modal-head-l">
+        <div class="modal-icon" id="modal-icon">⚡</div>
+        <h3 id="modal-titel">Toestel</h3>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div class="modal-dots">
+          <div class="mdot on" id="d1"></div>
+          <div class="mdot" id="d2"></div>
+          <div class="mdot" id="d3"></div>
+        </div>
+        <button id="modal-x" onclick="sluitModal()">✕</button>
+      </div>
+    </div>
+    <div class="modal-prog"><div class="modal-prog-bar" id="mpbar"></div></div>
+    <div id="modal-body">
+      <div id="stap-parameters">
+        <div class="stap-lbl">Stap 1 van 3 — Jouw gegevens</div>
+        <div id="params-container"></div>
+        <button id="btn-bereken" onclick="berekenVerbruik()">⚡ Bereken mijn verbruik</button>
+      </div>
+      <div id="stap-resultaat">
+        <div class="stap-lbl">Stap 2 van 3 — Resultaat</div>
+        <div class="res-hero">
+          <div class="res-lbl">Jouw dagelijks verbruik</div>
+          <div id="res-getal">—</div>
+          <div id="res-eenheid">kWh per dag</div>
+        </div>
+        <div class="cost-row">
+          <div class="cpill"><div class="cpill-num" id="c-dag">—</div><div class="cpill-lbl">€/dag</div></div>
+          <div class="cpill"><div class="cpill-num" id="c-maand">—</div><div class="cpill-lbl">€/maand</div></div>
+          <div class="cpill"><div class="cpill-num" id="c-jaar">—</div><div class="cpill-lbl">€/jaar</div></div>
+        </div>
+        <div class="modal-nav">
+          <button class="btn-back" onclick="toonStap('parameters')">← Aanpassen</button>
+          <button class="btn-next" onclick="toonStap('tips')">Tips →</button>
+        </div>
+      </div>
+      <div id="stap-tips">
+        <div class="stap-lbl">Stap 3 van 3 — Tips & weetjes</div>
+        <div id="gem-box"></div>
+        <div id="tips-box"><h4>💡 Bespaartips</h4><ul id="tips-lijst"></ul></div>
+        <div class="modal-nav">
+          <button class="btn-back" onclick="toonStap('resultaat')">← Resultaat</button>
+          <button class="btn-done" onclick="sluitModal()">✓ Sluiten</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  WattWise &copy; 2026 · Duurzaamheidsproject · Data: <a href="https://data.europa.eu/data/datasets/670facfc5cbe4a7f2f56ace7" target="_blank">ADEME</a>
+</footer>
+
+<script src="../javascript/script3.js" defer></script>
+
+<style>
+@keyframes fadeSlideUp {
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+</style>
+
+</body>
+</html>
