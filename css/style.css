@@ -1,483 +1,639 @@
-    /* =============================================
-       CSS VARIABELEN – kleuren & typografie
-    ============================================= */
-    :root {
-      --groen:       #2d6a4f;
-      --groen-licht: #52b788;
-      --groen-zacht: #d8f3dc;
-      --geel:        #f9c74f;
-      --oranje:      #f3722c;
-      --wit:         #fafaf8;
-      --donker:      #1b2428;
-      --grijs:       #6b7c85;
-      --schaduw:     0 8px 32px rgba(27,36,40,.13);
-      --radius:      16px;
-    }
+:root {
+  --g1:#0a2e1a; --g2:#1a5c38; --g3:#2d9e5f; --g4:#5dd68e; --g5:#c8f5db;
+  --amber:#f5c842; --amber2:#e8a80a; --bg:#f0f7f3;
+  --surface:#ffffff; --text:#0d1f16; --muted:#607a6b; --border:#d0eada;
+  --shadow:0 4px 24px rgba(10,46,26,.10); --shadow-lg:0 12px 48px rgba(10,46,26,.16);
+  --r:18px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+h1,h2,h3,h4{font-family:"Syne",sans-serif;}
+button{cursor:pointer;font-family:"DM Sans",sans-serif;border:none;outline:none;}
 
-    /* =============================================
-       RESET & BASIS
-    ============================================= */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* ── HEADER ── */
+header{
+  background:var(--g1);padding:0 32px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.logo{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:34px;height:34px;background:var(--g3);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.logo h1{font-size:1.2rem;color:#fff;letter-spacing:-.3px;}
+.logo h1 span{color:var(--g4);}
+.hdr-badge{background:rgba(93,214,142,.12);color:var(--g4);border:1px solid rgba(93,214,142,.25);border-radius:20px;padding:4px 14px;font-size:.75rem;font-weight:600;letter-spacing:.3px;}
 
-    body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--groen-zacht);
-      color: var(--donker);
-      min-height: 100vh;
-    }
+/* ── BREADCRUMB ── */
+#breadcrumb{
+  background:#fff;padding:0 32px;height:40px;
+  display:flex;align-items:center;gap:8px;
+  font-size:.8rem;color:var(--muted);
+  border-bottom:1px solid var(--border);
+  font-family:"Nunito",sans-serif;
+}
+.crumb{color:var(--g2);font-weight:700;cursor:pointer;transition:color .15s;}
+.crumb:hover{color:var(--g3);text-decoration:underline;}
+.bc-sep{color:#cde8d8;}
 
-    h1, h2, h3 { font-family: 'Merriweather', serif; }
+/* ── MAIN ── */
+main{max-width:1200px;margin:0 auto;padding:32px 20px 80px;}
 
-    button {
-      cursor: pointer;
-      font-family: 'Nunito', sans-serif;
-      border: none;
-      outline: none;
-    }
+/* ── SCHERM 1: HUIS ── */
+#scherm-huis{}
 
-    /* =============================================
-       HEADER
-    ============================================= */
-    header {
-      background: var(--groen);
-      color: #fff;
-      padding: 18px 32px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      box-shadow: 0 2px 12px rgba(0,0,0,.18);
-    }
-    header h1 { font-size: 1.5rem; letter-spacing: .5px; }
-    header .leaf { font-size: 2rem; }
+.page-intro{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  margin-bottom:20px;gap:24px;flex-wrap:wrap;
+}
+.page-intro-text h2{font-size:1.7rem;color:var(--g1);line-height:1.2;margin-bottom:6px;}
+.page-intro-text p{color:var(--muted);font-size:.9rem;max-width:420px;}
+.stats-strip{display:flex;gap:10px;flex-wrap:wrap;}
+.stat-badge{
+  background:#fff;border:1.5px solid var(--border);border-radius:12px;
+  padding:10px 16px;text-align:center;min-width:90px;
+}
+.stat-badge-num{font-family:"Syne",sans-serif;font-size:1.4rem;font-weight:800;color:var(--g2);line-height:1;}
+.stat-badge-lbl{font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;font-family:"Nunito",sans-serif;}
 
-    /* =============================================
-       NAVIGATIE-BALK (breadcrumb)
-    ============================================= */
-    #breadcrumb {
-      background: #fff;
-      padding: 10px 32px;
-      font-size: .9rem;
-      color: var(--grijs);
-      border-bottom: 2px solid var(--groen-zacht);
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    #breadcrumb span.crumb {
-      color: var(--groen);
-      font-weight: 700;
-      cursor: pointer;
-    }
-    #breadcrumb span.crumb:hover { text-decoration: underline; }
+/* ── HUIS WRAPPER ── */
+.house-wrap{
+  position:relative;
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  background:#b8d8e8;
+  aspect-ratio:3/2;
+  cursor:default;
+}
 
-    /* =============================================
-       HOOFD-CONTENT WRAPPER
-    ============================================= */
-    main {
-      max-width: 1100px;
-      margin: 36px auto;
-      padding: 0 20px;
-    }
+.house-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .6s cubic-bezier(.4,0,.2,1), filter .6s;
+  transform-origin:center center;
+}
 
-    /* =============================================
-       SCHERM 1 – HUIS OVERZICHT
-    ============================================= */
-    #scherm-huis { text-align: center; }
-    #scherm-huis h2 { font-size: 1.8rem; margin-bottom: 8px; color: var(--groen); }
-    #scherm-huis p  { color: var(--grijs); margin-bottom: 28px; }
+/* ── KAMER OVERLAYS ── */
+.kamer-overlay{
+  position:absolute;
+  background:rgba(45,158,95,.08);
+  border:2px dashed rgba(45,158,95,.5);
+  cursor:pointer;
+  transition:background .2s, border-color .2s, transform .15s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:4px;
+}
+.kamer-overlay:hover{
+  background:rgba(45,158,95,.22);
+  border-color:var(--g3);
+  border-style:solid;
+}
+.kamer-overlay:hover .kamer-tag{opacity:1;transform:translateY(0);}
 
-    /* --- HUIS AFBEELDING CONTAINER ---
-         Vervang de achtergrond-kleur door:
-         background-image: url('jouw-huis-afbeelding.png');
-         background-size: contain;
-         background-repeat: no-repeat;
-         background-position: center;
-    */
-    #huis-wrapper {
-      position: relative;
-      width: 100%;
-      max-width: 780px;
-      margin: 0 auto;
-      /* ↓ PLACEHOLDER – verwijder dit als je de afbeelding hebt */
-      background: linear-gradient(160deg, #b7e4c7 0%, #74c69d 100%);
-      border-radius: var(--radius);
-      box-shadow: var(--schaduw);
-      /* ↓ Pas de hoogte aan aan je afbeelding */
-      padding-bottom: 62%; /* verhouding breedte:hoogte van je huis-afbeelding */
-      overflow: hidden;
-    }
+.kamer-pulse{
+  width:28px;height:28px;
+  background:rgba(255,255,255,.9);
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;
+  box-shadow:0 2px 8px rgba(0,0,0,.18);
+  position:relative;
+  flex-shrink:0;
+}
+.kamer-pulse::after{
+  content:"";position:absolute;inset:-4px;
+  border-radius:50%;
+  border:2px solid rgba(45,158,95,.4);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:.6;}
+  50%{transform:scale(1.3);opacity:0;}
+}
 
-    /* Placeholder tekst – verwijder dit blok als je de echte afbeelding hebt */
-    #huis-placeholder {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      color: var(--groen);
-      font-size: 1.1rem;
-      font-weight: 700;
-      text-align: center;
-      pointer-events: none;
-    }
+.kamer-tag{
+  background:rgba(10,46,26,.82);
+  color:#fff;
+  border-radius:20px;
+  padding:3px 10px;
+  font-size:.68rem;
+  font-weight:700;
+  font-family:"Nunito",sans-serif;
+  white-space:nowrap;
+  letter-spacing:.3px;
+  opacity:0;
+  transform:translateY(4px);
+  transition:opacity .18s, transform .18s;
+  pointer-events:none;
+}
 
-    /* =============================================
-       KAMER-KLIKBOXEN op het huis
-       -----------------------------------------------
-       Positioneer elke kamer door top/left/width/height
-       aan te passen zodat ze over de juiste ruimte
-       in je huis-afbeelding vallen.
-    ============================================= */
-    .kamer-box {
-      position: absolute;
-      background: rgba(82, 183, 136, .22);
-      border: 2.5px dashed var(--groen-licht);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background .2s, transform .15s;
-      font-weight: 700;
-      font-size: .85rem;
-      color: var(--groen);
-      text-shadow: 0 1px 3px #fff8;
-    }
-    .kamer-box:hover {
-      background: rgba(82, 183, 136, .48);
-      transform: scale(1.03);
-    }
-    .kamer-box .kamer-label {
-      background: rgba(255,255,255,.85);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: .8rem;
-      pointer-events: none;
-    }
+/* Click-to-zoom animation */
+.house-wrap .zoom-overlay{
+  position:absolute;inset:0;
+  background:rgba(10,46,26,0);
+  pointer-events:none;
+  transition:background .4s;
+  z-index:10;
+}
+.house-wrap.zooming .zoom-overlay{background:rgba(10,46,26,.35);}
 
-    /* ============================================
-       POSITIES VAN DE KAMERBOXEN
-       Pas top / left / width / height aan naar
-       de exacte positie op jouw huis-afbeelding.
-       Waarden zijn % van de wrapper-breedte/-hoogte.
-    ============================================= */
+/* ── SCHERM 2: KAMER ── */
+#scherm-kamer{display:none;}
 
-    /* --- WOONKAMER --- */
-    [data-kamer="woonkamer"]  { top:42%; left:5%;  width:28%; height:28%; }
+.kamer-top{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:24px;
+}
+#btn-terug{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#fff;color:var(--g2);
+  border:1.5px solid var(--border);border-radius:10px;
+  padding:8px 16px;font-size:.85rem;font-weight:700;
+  font-family:"Nunito",sans-serif;
+  transition:all .15s;
+  flex-shrink:0;
+}
+#btn-terug:hover{background:var(--g5);border-color:var(--g3);}
 
-    /* --- KEUKEN --- */
-    [data-kamer="keuken"]     { top:42%; left:36%; width:26%; height:28%; }
+.kamer-title-block h2{font-size:1.7rem;color:var(--g1);}
+.kamer-title-block p{font-size:.88rem;color:var(--muted);margin-top:3px;}
 
-    /* --- BADKAMER --- */
-    [data-kamer="badkamer"]   { top:8%;  left:60%; width:20%; height:22%; }
+/* ── KAMER SCENE ── */
+.kamer-scene{
+  position:relative;
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  background:#e8f4ed;
+  aspect-ratio:16/7;
+  margin-bottom:24px;
+}
 
-    /* --- SLAAPKAMER --- */
-    [data-kamer="slaapkamer"] { top:8%;  left:5%;  width:26%; height:22%; }
+/* SVG kamer achtergrond — vult de hele scene */
+.kamer-scene-bg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  overflow:hidden;
+}
+.kamer-scene-bg svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
 
-    /* --- BERGING --- */
-    [data-kamer="berging"]    { top:8%;  left:34%; width:22%; height:22%; }
+/* Fallback kleur-gradients als SVG ontbreekt */
+.kamer-scene-bg.woonkamer:not(:has(svg)){background:linear-gradient(160deg,#f5e6c8 0%,#e8d5a3 100%);}
+.kamer-scene-bg.keuken:not(:has(svg)){background:linear-gradient(160deg,#d4ecd4 0%,#b8e0b8 100%);}
+.kamer-scene-bg.badkamer:not(:has(svg)){background:linear-gradient(160deg,#c8e8f5 0%,#a8d4e8 100%);}
+.kamer-scene-bg.slaapkamer:not(:has(svg)){background:linear-gradient(160deg,#e8d8f0 0%,#d4c0e8 100%);}
+.kamer-scene-bg.berging:not(:has(svg)){background:linear-gradient(160deg,#e8e0d0 0%,#d8d0c0 100%);}
+.kamer-scene-bg.garage:not(:has(svg)){background:linear-gradient(160deg,#d8dce8 0%,#c0c8d8 100%);}
 
-    /* --- GARAGE --- */
-    [data-kamer="garage"]     { top:42%; left:65%; width:28%; height:28%; }
+/* Vloer overlay — lichte schaduw onderaan */
+.kamer-floor{
+  position:absolute;bottom:0;left:0;right:0;height:6%;
+  background:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.06) 100%);
+  pointer-events:none;
+  z-index:2;
+}
 
+/* Room label badge */
+.room-label-badge{
+  position:absolute;top:16px;left:16px;
+  background:rgba(10,46,26,.75);
+  color:#fff;
+  border-radius:30px;
+  padding:6px 16px;
+  font-family:"Nunito",sans-serif;
+  font-size:.85rem;
+  font-weight:700;
+  display:flex;align-items:center;gap:8px;
+  backdrop-filter:blur(4px);
+  z-index:5;
+}
 
-    /* =============================================
-       SCHERM 2 – KAMER (toestellen-overzicht)
-    ============================================= */
-    #scherm-kamer { display: none; }
-    #scherm-kamer h2 { font-size: 1.6rem; color: var(--groen); margin-bottom: 6px; }
-    #scherm-kamer .kamer-intro { color: var(--grijs); margin-bottom: 24px; }
+/* ── APPLIANCE SPOTS ── */
+.appliance-spot{
+  position:absolute;
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  cursor:pointer;
+  transition:transform .22s cubic-bezier(.34,1.4,.64,1);
+  z-index:4;
+}
+.appliance-spot:hover{
+  transform:scale(1.10) translateY(-5px);
+}
 
-    /* --- KAMER ACHTERGROND AFBEELDING ---
-         Vervang background door je kamer-foto.
-         Elke kamer heeft zijn eigen id.
-    */
-    #kamer-beeld {
-      position: relative;
-      width: 100%;
-      border-radius: var(--radius);
-      /* ↓ PLACEHOLDER */
-      background: linear-gradient(135deg, #e9f5ee 0%, #b7e4c7 100%);
-      min-height: 340px;
-      box-shadow: var(--schaduw);
-      overflow: hidden;
-      margin-bottom: 28px;
-    }
+/* Bubble groter + mooier */
+.appliance-bubble{
+  background:rgba(255,255,255,.94);
+  border:2px solid rgba(45,158,95,.25);
+  border-radius:18px;
+  width:84px;
+  height:84px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  box-shadow:
+    0 4px 20px rgba(0,0,0,.13),
+    0 1px 4px rgba(0,0,0,.08),
+    inset 0 1px 0 rgba(255,255,255,.8);
+  transition:border-color .2s, box-shadow .2s, transform .2s;
+  gap:4px;
+  backdrop-filter:blur(8px);
+  position:relative;
+  overflow:hidden;
+}
+.appliance-bubble::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:40%;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0%,transparent 100%);
+  border-radius:16px 16px 0 0;
+  pointer-events:none;
+}
+.appliance-spot:hover .appliance-bubble{
+  border-color:var(--g3);
+  box-shadow:
+    0 8px 28px rgba(45,158,95,.22),
+    0 2px 8px rgba(0,0,0,.10),
+    inset 0 1px 0 rgba(255,255,255,.8);
+}
 
-    /* Achtergrond per kamer – voeg je afbeelding in via CSS of inline style */
-    /* #kamer-beeld.woonkamer  { background-image: url('kamers/woonkamer.jpg');  background-size:cover; } */
-    /* #kamer-beeld.keuken     { background-image: url('kamers/keuken.jpg');     background-size:cover; } */
-    /* #kamer-beeld.badkamer   { background-image: url('kamers/badkamer.jpg');   background-size:cover; } */
-    /* #kamer-beeld.slaapkamer { background-image: url('kamers/slaapkamer.jpg'); background-size:cover; } */
-    /* #kamer-beeld.berging    { background-image: url('kamers/berging.jpg');    background-size:cover; } */
-    /* #kamer-beeld.garage     { background-image: url('kamers/garage.jpg');     background-size:cover; } */
+/* Als berekend: groene rand highlight */
+.appliance-spot.berekend .appliance-bubble{
+  border-color:var(--g3);
+  border-width:2.5px;
+}
 
-    /* =============================================
-       TOESTEL-KLIKBOXEN in de kamer
-       Zelfde principe als kamerboxen:
-       positioneer over je kamer-afbeelding.
-    ============================================= */
-    .toestel-box {
-      position: absolute;
-      /* background: rgba(249,199,79,.22); */
-      /* border: 2px dashed var(--geel); */
-      /* border-radius: 8px; */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: .78rem;
-      font-weight: 700;
-      /* color: #7a4f00; */
-      transition: background .2s, transform .15s;
-    }
-    .toestel-box:hover {
-      /* background: rgba(249,199,79,.55); */
-      transform: scale(1.04);
-    }
-    .toestel-box .toestel-label {
-      background: rgba(255,255,255,.88);
-      padding: 3px 8px;
-      border-radius: 20px;
-      pointer-events: none;
-    }
-    .toestel-box img.toestel-img {
-      position: absolute;
-      width: 70%;
-      height: 70%;
-      object-fit: contain;
-      pointer-events: none;
-      /* Verwijder opacity als je echte afbeelding goed zichtbaar is */
-    }
+/* PNG icon in bubble */
+.appliance-img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
+  display:block;
+  flex-shrink:0;
+  image-rendering:auto;
+  /* Lichte schaduw voor diepte */
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.12));
+  transition:filter .2s, transform .2s;
+}
+.appliance-spot:hover .appliance-img{
+  filter:drop-shadow(0 3px 6px rgba(45,158,95,.3));
+  transform:scale(1.06);
+}
 
-    /* =============================================
-       SCHERM 3 – MODAAL (parameters + resultaat + tips)
-    ============================================= */
-    #modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(27,36,40,.55);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-    #modal-overlay.actief { display: flex; }
+/* Emoji fallback */
+.appliance-emoji{
+  font-size:2rem;
+  line-height:1;
+  display:block;
+  transition:transform .2s;
+}
+.appliance-spot:hover .appliance-emoji{
+  transform:scale(1.08);
+}
 
-    #modal {
-      background: #fff;
-      border-radius: var(--radius);
-      max-width: 520px;
-      width: 100%;
-      box-shadow: 0 20px 60px rgba(0,0,0,.22);
-      overflow: hidden;
-      animation: slideUp .3s ease;
-    }
-    @keyframes slideUp {
-      from { transform: translateY(30px); opacity: 0; }
-      to   { transform: translateY(0);    opacity: 1; }
-    }
+/* Naam label onder bubble */
+.appliance-name{
+  font-size:.6rem;
+  font-weight:700;
+  color:var(--g1);
+  text-align:center;
+  line-height:1.2;
+  font-family:"Nunito",sans-serif;
+  padding:0 3px;
+  max-width:80px;
+  word-break:break-word;
+}
 
-    #modal-header {
-      background: var(--groen);
-      color: #fff;
-      padding: 18px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    #modal-header h3 { font-size: 1.15rem; }
-    #modal-sluiten {
-      background: transparent;
-      color: #fff;
-      font-size: 1.5rem;
-      line-height: 1;
-      padding: 0 4px;
-      border-radius: 6px;
-      transition: background .15s;
-    }
-    #modal-sluiten:hover { background: rgba(255,255,255,.2); }
+/* kWh badge */
+.appliance-kwh-badge{
+  background:var(--g4);
+  color:var(--g1);
+  border-radius:20px;
+  padding:2px 9px;
+  font-size:.62rem;
+  font-weight:800;
+  font-family:"Nunito",sans-serif;
+  white-space:nowrap;
+  box-shadow:0 2px 6px rgba(45,158,95,.25);
+  transition:background .2s;
+}
+.appliance-kwh-badge.uncalc{
+  background:rgba(255,255,255,.75);
+  color:var(--muted);
+  border:1px solid rgba(0,0,0,.08);
+  font-weight:600;
+  box-shadow:none;
+}
 
-    #modal-body { padding: 22px 24px; }
+/* Energie-level indicator per bubble (na berekening) */
+.appliance-spot.energie-laag .appliance-bubble { border-color:#4caf50; }
+.appliance-spot.energie-middel .appliance-bubble { border-color:#ff9800; }
+.appliance-spot.energie-hoog .appliance-bubble { border-color:#f44336; }
+.appliance-spot.energie-laag .appliance-kwh-badge { background:#a5d6a7; color:#1b5e20; }
+.appliance-spot.energie-middel .appliance-kwh-badge { background:#ffe082; color:#e65100; }
+.appliance-spot.energie-hoog .appliance-kwh-badge { background:#ef9a9a; color:#b71c1c; }
 
-    /* STAP 1 – parameters invoeren */
-    #stap-parameters { display: block; }
+/* ── MODAL ── */
+#modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(10,46,26,.52);
+  backdrop-filter:blur(6px);
+  z-index:500;align-items:center;justify-content:center;padding:20px;
+}
+#modal-overlay.actief{display:flex;}
+#modal{
+  background:#fff;border-radius:24px;
+  max-width:520px;width:100%;
+  box-shadow:var(--shadow-lg);overflow:hidden;
+  animation:popIn .28s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn{from{transform:scale(.9) translateY(24px);opacity:0;}to{transform:scale(1) translateY(0);opacity:1;}}
 
-    .parameter-rij {
-      margin-bottom: 14px;
-    }
-    .parameter-rij label {
-      display: block;
-      font-weight: 700;
-      font-size: .88rem;
-      margin-bottom: 5px;
-      color: var(--donker);
-    }
-    .parameter-rij select,
-    .parameter-rij input[type="number"],
-    .parameter-rij input[type="text"] {
-      width: 100%;
-      padding: 9px 12px;
-      border: 2px solid #d4e6da;
-      border-radius: 8px;
-      font-family: 'Nunito', sans-serif;
-      font-size: .92rem;
-      transition: border-color .2s;
-    }
-    .parameter-rij select:focus,
-    .parameter-rij input:focus {
-      border-color: var(--groen-licht);
-      outline: none;
-    }
+.modal-head{
+  background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);
+  padding:20px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.modal-head-l{display:flex;align-items:center;gap:12px;}
+.modal-icon{
+  width:42px;height:42px;
+  background:rgba(255,255,255,.12);
+  border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;
+  overflow:hidden;
+}
+.modal-icon img{
+  width:28px;height:28px;
+  object-fit:contain;
+  filter:brightness(0) invert(1) opacity(0.9);
+}
+#modal-titel{font-size:1.05rem;color:#fff;}
+.modal-dots{display:flex;gap:5px;}
+.mdot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.28);transition:background .2s;}
+.mdot.on{background:var(--amber);}
+#modal-x{background:rgba(255,255,255,.12);color:#fff;width:30px;height:30px;border-radius:7px;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background .15s;}
+#modal-x:hover{background:rgba(255,255,255,.22);}
 
-    /* Bereken-knop */
-    #btn-bereken {
-      width: 100%;
-      padding: 12px;
-      background: var(--groen);
-      color: #fff;
-      border-radius: 10px;
-      font-size: 1rem;
-      font-weight: 700;
-      margin-top: 6px;
-      transition: background .2s, transform .1s;
-    }
-    #btn-bereken:hover { background: #1f4f3a; transform: translateY(-1px); }
+.modal-prog{height:3px;background:var(--border);}
+.modal-prog-bar{height:100%;background:linear-gradient(90deg,var(--g3),var(--amber));transition:width .35s ease;width:33.3%;}
 
-    /* STAP 2 – resultaat */
-    #stap-resultaat { display: none; }
+#modal-body{padding:22px 24px;}
 
-    #resultaat-box {
-      background: var(--groen-zacht);
-      border-radius: 12px;
-      padding: 18px 20px;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-    #resultaat-box .resultaat-label {
-      font-size: .85rem;
-      color: var(--grijs);
-      margin-bottom: 4px;
-    }
-    #resultaat-getal {
-      font-size: 2.2rem;
-      font-weight: 900;
-      color: var(--groen);
-    }
-    #resultaat-eenheid {
-      font-size: .9rem;
-      color: var(--grijs);
-      margin-top: 2px;
-    }
+.stap-lbl{font-size:.7rem;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-family:"Nunito",sans-serif;font-weight:700;margin-bottom:14px;}
 
-    /* STAP 3 – tips & weetjes */
-    #stap-tips { display: none; }
+#stap-parameters{display:block;}
+.param-row{margin-bottom:12px;}
+.param-row label{display:block;font-weight:700;font-size:.83rem;margin-bottom:5px;color:var(--text);font-family:"Nunito",sans-serif;}
+.param-row select,.param-row input[type=number],.param-row input[type=text]{
+  width:100%;padding:9px 13px;border:1.5px solid var(--border);border-radius:9px;
+  font-family:"DM Sans",sans-serif;font-size:.9rem;color:var(--text);background:#fafef9;
+  transition:border-color .18s, box-shadow .18s;appearance:none;
+}
+.param-row select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232d9e5f' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:34px;}
+.param-row select:focus,.param-row input:focus{border-color:var(--g3);box-shadow:0 0 0 3px rgba(45,158,95,.12);outline:none;}
 
-    #tips-box {
-      background: #fffbea;
-      border-left: 5px solid var(--geel);
-      border-radius: 10px;
-      padding: 16px 18px;
-      margin-bottom: 18px;
-    }
-    #tips-box h4 { font-size: 1rem; margin-bottom: 10px; color: #7a4f00; }
-    #tips-box ul { padding-left: 18px; }
-    #tips-box ul li { margin-bottom: 7px; font-size: .9rem; line-height: 1.5; }
+#btn-bereken{
+  width:100%;padding:12px;
+  background:linear-gradient(135deg,var(--g2) 0%,var(--g3) 100%);
+  color:#fff;border-radius:11px;font-size:.92rem;font-weight:700;
+  font-family:"Nunito",sans-serif;margin-top:6px;letter-spacing:.2px;
+  transition:all .2s;box-shadow:0 4px 16px rgba(45,158,95,.28);
+}
+#btn-bereken:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,158,95,.38);}
 
-    #gemiddelde-box {
-      background: var(--groen-zacht);
-      border-radius: 10px;
-      padding: 12px 16px;
-      margin-bottom: 18px;
-      font-size: .88rem;
-      color: var(--donker);
-    }
+#stap-resultaat{display:none;}
+.res-hero{
+  background:linear-gradient(135deg,var(--g1) 0%,var(--g2) 100%);
+  border-radius:14px;padding:24px;text-align:center;margin-bottom:16px;position:relative;overflow:hidden;
+}
+.res-hero::before{content:"";position:absolute;top:-40px;right:-40px;width:140px;height:140px;background:radial-gradient(circle,rgba(93,214,142,.2) 0%,transparent 70%);border-radius:50%;}
+.res-lbl{font-size:.72rem;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px;font-family:"Nunito",sans-serif;}
+#res-getal{font-family:"Syne",sans-serif;font-size:3.2rem;font-weight:800;color:var(--amber);line-height:1;margin-bottom:3px;}
+#res-eenheid{font-size:.82rem;color:rgba(255,255,255,.55);}
+.cost-row{display:flex;gap:8px;margin-bottom:14px;}
+.cpill{flex:1;background:var(--g5);border:1px solid var(--border);border-radius:9px;padding:10px 12px;text-align:center;}
+.cpill-num{font-family:"Syne",sans-serif;font-size:1.2rem;color:var(--g1);font-weight:800;}
+.cpill-lbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;font-family:"Nunito",sans-serif;}
 
-    /* Navigatieknoppen in modal */
-    .modal-nav {
-      display: flex;
-      gap: 10px;
-      margin-top: 4px;
-    }
-    .modal-nav button {
-      flex: 1;
-      padding: 10px;
-      border-radius: 10px;
-      font-size: .92rem;
-      font-weight: 700;
-      transition: background .2s, transform .1s;
-    }
-    .btn-terug {
-      background: #e8f4ee;
-      color: var(--groen);
-    }
-    .btn-terug:hover { background: #c8e6d4; }
-    .btn-verder {
-      background: var(--groen);
-      color: #fff;
-    }
-    .btn-verder:hover { background: #1f4f3a; transform: translateY(-1px); }
-    .btn-afsluiten {
-      background: var(--geel);
-      color: #7a4f00;
-    }
-    .btn-afsluiten:hover { background: #f0b800; }
+#stap-tips{display:none;}
+#gem-box{background:linear-gradient(135deg,var(--g5),#e0f7e9);border:1px solid var(--border);border-left:4px solid var(--g3);border-radius:9px;padding:12px 14px;margin-bottom:14px;font-size:.86rem;color:var(--g1);line-height:1.55;}
+#tips-box{background:#fffbec;border:1px solid #f5e0a0;border-left:4px solid var(--amber);border-radius:9px;padding:14px 16px;margin-bottom:16px;}
+#tips-box h4{font-size:.85rem;color:#7a5000;margin-bottom:8px;font-family:"Nunito",sans-serif;display:flex;align-items:center;gap:6px;}
+#tips-lijst{padding-left:0;list-style:none;display:flex;flex-direction:column;gap:5px;}
+#tips-lijst li{font-size:.84rem;color:var(--text);line-height:1.5;padding-left:18px;position:relative;}
+#tips-lijst li::before{content:"✓";position:absolute;left:0;color:var(--g3);font-weight:700;}
 
-    /* =============================================
-       TERUG-KNOP (kamer → huis)
-    ============================================= */
-    #btn-terug-huis {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #fff;
-      color: var(--groen);
-      border: 2px solid var(--groen-licht);
-      border-radius: 10px;
-      padding: 8px 18px;
-      font-weight: 700;
-      font-size: .9rem;
-      margin-bottom: 20px;
-      transition: background .2s;
-    }
-    #btn-terug-huis:hover { background: var(--groen-zacht); }
+.modal-nav{display:flex;gap:8px;margin-top:2px;}
+.modal-nav button{flex:1;padding:10px;border-radius:9px;font-size:.86rem;font-weight:700;font-family:"Nunito",sans-serif;transition:all .15s;}
+.btn-back{background:var(--g5);color:var(--g2);border:1.5px solid var(--border);}
+.btn-back:hover{background:#b8efd0;border-color:var(--g3);}
+.btn-next{background:linear-gradient(135deg,var(--g2),var(--g3));color:#fff;}
+.btn-next:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(45,158,95,.3);}
+.btn-done{background:var(--amber);color:#5a3800;}
+.btn-done:hover{background:var(--amber2);color:#fff;}
 
-    /* =============================================
-       RESPONSIVE
-    ============================================= */
-    @media (max-width: 600px) {
-      main { padding: 0 10px; }
-      #modal { max-width: 100%; }
-    }
+/* ── FOOTER ── */
+footer{background:var(--g1);color:rgba(255,255,255,.38);text-align:center;padding:18px;font-size:.74rem;font-family:"Nunito",sans-serif;}
+footer a{color:var(--g4);}
 
-    /* SVG kamers */
-    .kamer-boxSVG rect {
-      fill: rgba(82, 183, 136, 0.3);
-      stroke: #52b788;
-      stroke-width: 2;
-      stroke-dasharray: 6 4;
-      rx: 10;
-      ry: 10;
-      cursor: pointer;
-      transition: 0.2s;
-    }
+/* ── RESPONSIVE ── */
+@media(max-width:700px){
+  header,#breadcrumb{padding:0 16px;}
+  main{padding:20px 12px 60px;}
+  .page-intro{flex-direction:column;align-items:flex-start;}
+  .appliance-bubble{width:66px;height:66px;}
+  .appliance-img{width:32px;height:32px;}
+  .appliance-emoji{font-size:1.5rem;}
+  .appliance-name{font-size:.55rem;max-width:64px;}
+}
 
-    .kamer-boxSVG:hover rect {
-      fill: rgba(82, 183, 136, 0.6);
-    }
+@keyframes fadeSlideUp {
+  from{opacity:0;transform:translateY(16px);}
+  to{opacity:1;transform:translateY(0);}
+}
+/* ══════════════════════════════════════════════════════
+   WATTWISE v2.0 – NIEUWE STIJLEN
+══════════════════════════════════════════════════════ */
 
-    /* tekst */
-    .kamer-boxSVG text {
-      font-size: 12px;
-      font-weight: bold;
-      fill: #2d6a4f;
-      pointer-events: none;
-    }
+/* ── MODUS TOGGLE (eigen invoer vs. ADEME) ── */
+.modus-toggle {
+  display:flex;gap:6px;margin-bottom:14px;
+  background:var(--g5);border-radius:12px;padding:4px;
+}
+.modus-btn {
+  flex:1;padding:8px 10px;border-radius:9px;font-size:.8rem;font-weight:700;
+  font-family:"Nunito",sans-serif;background:transparent;color:var(--muted);
+  border:none;transition:all .2s;text-align:center;
+}
+.modus-btn.actief {
+  background:#fff;color:var(--g2);
+  box-shadow:0 2px 8px rgba(10,46,26,.12);
+}
+.modus-btn:hover:not(.actief) { background:rgba(255,255,255,.5); }
 
-    .active {
-      display: block;
-    }
+/* ── PARAM TOOLTIP ── */
+.param-tooltip {
+  font-size:.72rem;color:var(--muted);cursor:help;
+  background:var(--border);border-radius:50%;
+  width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;
+  font-style:normal;flex-shrink:0;transition:background .15s;
+}
+.param-tooltip:hover { background:var(--g4);color:var(--g1); }
 
-    .hidden {
-      display: none;
-    }
+/* ── ENERGIELABEL LEGENDA ── */
+.label-legenda {
+  display:flex;gap:4px;flex-wrap:wrap;margin-top:6px;
+}
+.lbl-badge {
+  padding:2px 7px;border-radius:5px;font-size:.68rem;font-weight:800;
+  color:#fff;cursor:pointer;font-family:"Nunito",sans-serif;
+  transition:transform .15s, box-shadow .15s;
+  text-shadow:0 1px 2px rgba(0,0,0,.25);
+}
+.lbl-badge:hover { transform:scale(1.1); box-shadow:0 2px 6px rgba(0,0,0,.2); }
+
+/* ── PRESET KNOPPEN (bv. haardroger duur) ── */
+.preset-knoppen {
+  display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap;
+}
+.preset-btn {
+  padding:5px 13px;border-radius:20px;font-size:.78rem;font-weight:700;
+  font-family:"Nunito",sans-serif;
+  background:var(--g5);color:var(--g2);border:1.5px solid var(--border);
+  transition:all .15s;
+}
+.preset-btn:hover { background:#b8efd0;border-color:var(--g3); }
+.preset-btn.actief { background:var(--g3);color:#fff;border-color:var(--g2); }
+
+/* ── ADEME GEMIDDELDE SECTIE ── */
+.ademe-uitleg {
+  display:flex;align-items:center;gap:12px;
+  background:linear-gradient(135deg,#e8f5ee,#f0faf4);
+  border:1px solid var(--border);border-radius:10px;
+  padding:12px 14px;margin-bottom:12px;
+}
+.ademe-icon { font-size:1.6rem; }
+.ademe-uitleg strong { font-size:.88rem;color:var(--g1); }
+
+.ademe-getal-box {
+  text-align:center;
+  background:linear-gradient(135deg,var(--g1),var(--g2));
+  border-radius:12px;padding:18px;margin-bottom:10px;
+}
+.ademe-getal {
+  font-family:"Syne",sans-serif;font-size:2.8rem;font-weight:800;
+  color:var(--amber);line-height:1;
+}
+.ademe-eenheid { font-size:.8rem;color:rgba(255,255,255,.55);margin-top:3px; }
+.ademe-nota {
+  font-size:.78rem;color:var(--muted);text-align:center;
+  padding:0 4px;line-height:1.5;
+}
+
+/* ── BEREKEN + GEBRUIK-GEM knoppen ── */
+#btn-bereken, #btn-gebruik-gem {
+  flex:1;padding:12px;
+  border-radius:11px;font-size:.92rem;font-weight:700;
+  font-family:"Nunito",sans-serif;letter-spacing:.2px;
+  transition:all .2s;
+}
+#btn-bereken {
+  background:linear-gradient(135deg,var(--g2) 0%,var(--g3) 100%);
+  color:#fff;box-shadow:0 4px 16px rgba(45,158,95,.28);
+}
+#btn-bereken:hover { transform:translateY(-1px);box-shadow:0 6px 20px rgba(45,158,95,.38); }
+#btn-gebruik-gem {
+  background:linear-gradient(135deg,#3a5a8a,#5a7aaa);
+  color:#fff;box-shadow:0 4px 16px rgba(58,90,138,.25);
+}
+#btn-gebruik-gem:hover { transform:translateY(-1px);box-shadow:0 6px 20px rgba(58,90,138,.35); }
+
+/* ── VERGELIJKINGSBALK (jij vs. ADEME) ── */
+#cmp-box {
+  background:#f8fffe;border:1px solid var(--border);border-radius:10px;
+  padding:14px 16px;margin-bottom:14px;
+}
+.cmp-titel {
+  font-size:.72rem;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--muted);font-family:"Nunito",sans-serif;font-weight:700;
+  margin-bottom:10px;
+}
+.cmp-rij {
+  display:flex;align-items:center;gap:10px;margin-bottom:7px;
+}
+.cmp-lbl {
+  font-size:.76rem;font-weight:700;color:var(--text);
+  font-family:"Nunito",sans-serif;width:72px;flex-shrink:0;
+}
+.cmp-balk-wrap {
+  flex:1;height:10px;background:var(--border);border-radius:10px;overflow:hidden;
+}
+.cmp-balk {
+  height:100%;border-radius:10px;transition:width .6s cubic-bezier(.4,0,.2,1);
+}
+.cmp-balk.jij  { background:linear-gradient(90deg,var(--g3),var(--g4)); }
+.cmp-balk.gem  { background:linear-gradient(90deg,#a0b8d0,#b8cce0); }
+.cmp-val {
+  font-size:.75rem;font-weight:700;color:var(--g1);
+  font-family:"Nunito",sans-serif;min-width:75px;text-align:right;
+}
+.cmp-verdict {
+  font-size:.8rem;font-weight:700;font-family:"Nunito",sans-serif;
+  padding:6px 12px;border-radius:20px;text-align:center;margin-top:6px;
+}
+.cmp-verdict.goed  { background:#dcf5e8;color:#1b6e3a; }
+.cmp-verdict.slecht { background:#fdecea;color:#c62828; }
+
+/* ── TOTAALVERBRUIK BADGE IN KAMER ── */
+.kamer-totaal-badge {
+  position:absolute;bottom:16px;right:16px;
+  background:rgba(10,46,26,.85);
+  border:1px solid rgba(93,214,142,.3);
+  border-radius:14px;padding:8px 16px;
+  display:flex;align-items:center;gap:10px;
+  backdrop-filter:blur(6px);z-index:6;
+  animation:fadeSlideUp .3s ease both;
+  flex-wrap:wrap;
+}
+.tot-lbl {
+  font-size:.68rem;color:rgba(255,255,255,.55);
+  font-family:"Nunito",sans-serif;font-weight:600;
+}
+.tot-kwh {
+  font-family:"Syne",sans-serif;font-size:1rem;font-weight:800;
+  color:var(--amber);
+}
+.tot-eur {
+  font-size:.75rem;color:rgba(255,255,255,.7);
+  font-family:"Nunito",sans-serif;font-weight:600;
+}
+
+/* ── RESULTAAT BRON LABEL ── */
+#res-bron {
+  font-size:.7rem;margin-top:6px;
+  font-family:"Nunito",sans-serif;letter-spacing:.2px;
+}
+
+/* ── PARAM-ROW label override (voor consistentie) ── */
+.param-row { margin-bottom:12px; }
+.param-row select, .param-row input[type=number] {
+  border-left-width:1.5px;
+  border-left-style:solid;
+  border-left-color:var(--border);
+  transition:border-left-color .2s, border-left-width .2s;
+}
+
+/* ── RESPONSIVE AANPASSINGEN ── */
+@media(max-width:520px) {
+  .modus-toggle { flex-direction:column; }
+  .kamer-totaal-badge { flex-direction:column;gap:3px;padding:8px 12px; }
+  .cmp-rij { flex-wrap:wrap; }
+  .cmp-val { min-width:auto; }
+  #btn-bereken, #btn-gebruik-gem { font-size:.82rem;padding:10px; }
+}

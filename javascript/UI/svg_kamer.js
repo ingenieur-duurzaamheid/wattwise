@@ -4,7 +4,7 @@
    Elke kamer heeft een inline SVG als decoratieve achtergrond.
    viewBox: 800x350 (past bij aspect-ratio 16/7 van .kamer-scene)
 =================================================== */
-const KAMER_SVG = {
+export const KAMER_SVG = {
  
   woonkamer: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 350" preserveAspectRatio="xMidYMid slice">
     <!-- Wand -->

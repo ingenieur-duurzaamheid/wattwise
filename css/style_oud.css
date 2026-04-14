@@ -1,0 +1,483 @@
+    /* =============================================
+       CSS VARIABELEN – kleuren & typografie
+    ============================================= */
+    :root {
+      --groen:       #2d6a4f;
+      --groen-licht: #52b788;
+      --groen-zacht: #d8f3dc;
+      --geel:        #f9c74f;
+      --oranje:      #f3722c;
+      --wit:         #fafaf8;
+      --donker:      #1b2428;
+      --grijs:       #6b7c85;
+      --schaduw:     0 8px 32px rgba(27,36,40,.13);
+      --radius:      16px;
+    }
+
+    /* =============================================
+       RESET & BASIS
+    ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--groen-zacht);
+      color: var(--donker);
+      min-height: 100vh;
+    }
+
+    h1, h2, h3 { font-family: 'Merriweather', serif; }
+
+    button {
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      border: none;
+      outline: none;
+    }
+
+    /* =============================================
+       HEADER
+    ============================================= */
+    header {
+      background: var(--groen);
+      color: #fff;
+      padding: 18px 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.18);
+    }
+    header h1 { font-size: 1.5rem; letter-spacing: .5px; }
+    header .leaf { font-size: 2rem; }
+
+    /* =============================================
+       NAVIGATIE-BALK (breadcrumb)
+    ============================================= */
+    #breadcrumb {
+      background: #fff;
+      padding: 10px 32px;
+      font-size: .9rem;
+      color: var(--grijs);
+      border-bottom: 2px solid var(--groen-zacht);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    #breadcrumb span.crumb {
+      color: var(--groen);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    #breadcrumb span.crumb:hover { text-decoration: underline; }
+
+    /* =============================================
+       HOOFD-CONTENT WRAPPER
+    ============================================= */
+    main {
+      max-width: 1100px;
+      margin: 36px auto;
+      padding: 0 20px;
+    }
+
+    /* =============================================
+       SCHERM 1 – HUIS OVERZICHT
+    ============================================= */
+    #scherm-huis { text-align: center; }
+    #scherm-huis h2 { font-size: 1.8rem; margin-bottom: 8px; color: var(--groen); }
+    #scherm-huis p  { color: var(--grijs); margin-bottom: 28px; }
+
+    /* --- HUIS AFBEELDING CONTAINER ---
+         Vervang de achtergrond-kleur door:
+         background-image: url('jouw-huis-afbeelding.png');
+         background-size: contain;
+         background-repeat: no-repeat;
+         background-position: center;
+    */
+    #huis-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+      /* ↓ PLACEHOLDER – verwijder dit als je de afbeelding hebt */
+      background: linear-gradient(160deg, #b7e4c7 0%, #74c69d 100%);
+      border-radius: var(--radius);
+      box-shadow: var(--schaduw);
+      /* ↓ Pas de hoogte aan aan je afbeelding */
+      padding-bottom: 62%; /* verhouding breedte:hoogte van je huis-afbeelding */
+      overflow: hidden;
+    }
+
+    /* Placeholder tekst – verwijder dit blok als je de echte afbeelding hebt */
+    #huis-placeholder {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      color: var(--groen);
+      font-size: 1.1rem;
+      font-weight: 700;
+      text-align: center;
+      pointer-events: none;
+    }
+
+    /* =============================================
+       KAMER-KLIKBOXEN op het huis
+       -----------------------------------------------
+       Positioneer elke kamer door top/left/width/height
+       aan te passen zodat ze over de juiste ruimte
+       in je huis-afbeelding vallen.
+    ============================================= */
+    .kamer-box {
+      position: absolute;
+      background: rgba(82, 183, 136, .22);
+      border: 2.5px dashed var(--groen-licht);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+      font-weight: 700;
+      font-size: .85rem;
+      color: var(--groen);
+      text-shadow: 0 1px 3px #fff8;
+    }
+    .kamer-box:hover {
+      background: rgba(82, 183, 136, .48);
+      transform: scale(1.03);
+    }
+    .kamer-box .kamer-label {
+      background: rgba(255,255,255,.85);
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: .8rem;
+      pointer-events: none;
+    }
+
+    /* ============================================
+       POSITIES VAN DE KAMERBOXEN
+       Pas top / left / width / height aan naar
+       de exacte positie op jouw huis-afbeelding.
+       Waarden zijn % van de wrapper-breedte/-hoogte.
+    ============================================= */
+
+    /* --- WOONKAMER --- */
+    [data-kamer="woonkamer"]  { top:42%; left:5%;  width:28%; height:28%; }
+
+    /* --- KEUKEN --- */
+    [data-kamer="keuken"]     { top:42%; left:36%; width:26%; height:28%; }
+
+    /* --- BADKAMER --- */
+    [data-kamer="badkamer"]   { top:8%;  left:60%; width:20%; height:22%; }
+
+    /* --- SLAAPKAMER --- */
+    [data-kamer="slaapkamer"] { top:8%;  left:5%;  width:26%; height:22%; }
+
+    /* --- BERGING --- */
+    [data-kamer="berging"]    { top:8%;  left:34%; width:22%; height:22%; }
+
+    /* --- GARAGE --- */
+    [data-kamer="garage"]     { top:42%; left:65%; width:28%; height:28%; }
+
+
+    /* =============================================
+       SCHERM 2 – KAMER (toestellen-overzicht)
+    ============================================= */
+    #scherm-kamer { display: none; }
+    #scherm-kamer h2 { font-size: 1.6rem; color: var(--groen); margin-bottom: 6px; }
+    #scherm-kamer .kamer-intro { color: var(--grijs); margin-bottom: 24px; }
+
+    /* --- KAMER ACHTERGROND AFBEELDING ---
+         Vervang background door je kamer-foto.
+         Elke kamer heeft zijn eigen id.
+    */
+    #kamer-beeld {
+      position: relative;
+      width: 100%;
+      border-radius: var(--radius);
+      /* ↓ PLACEHOLDER */
+      background: linear-gradient(135deg, #e9f5ee 0%, #b7e4c7 100%);
+      min-height: 340px;
+      box-shadow: var(--schaduw);
+      overflow: hidden;
+      margin-bottom: 28px;
+    }
+
+    /* Achtergrond per kamer – voeg je afbeelding in via CSS of inline style */
+    /* #kamer-beeld.woonkamer  { background-image: url('kamers/woonkamer.jpg');  background-size:cover; } */
+    /* #kamer-beeld.keuken     { background-image: url('kamers/keuken.jpg');     background-size:cover; } */
+    /* #kamer-beeld.badkamer   { background-image: url('kamers/badkamer.jpg');   background-size:cover; } */
+    /* #kamer-beeld.slaapkamer { background-image: url('kamers/slaapkamer.jpg'); background-size:cover; } */
+    /* #kamer-beeld.berging    { background-image: url('kamers/berging.jpg');    background-size:cover; } */
+    /* #kamer-beeld.garage     { background-image: url('kamers/garage.jpg');     background-size:cover; } */
+
+    /* =============================================
+       TOESTEL-KLIKBOXEN in de kamer
+       Zelfde principe als kamerboxen:
+       positioneer over je kamer-afbeelding.
+    ============================================= */
+    .toestel-box {
+      position: absolute;
+      /* background: rgba(249,199,79,.22); */
+      /* border: 2px dashed var(--geel); */
+      /* border-radius: 8px; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: .78rem;
+      font-weight: 700;
+      /* color: #7a4f00; */
+      transition: background .2s, transform .15s;
+    }
+    .toestel-box:hover {
+      /* background: rgba(249,199,79,.55); */
+      transform: scale(1.04);
+    }
+    .toestel-box .toestel-label {
+      background: rgba(255,255,255,.88);
+      padding: 3px 8px;
+      border-radius: 20px;
+      pointer-events: none;
+    }
+    .toestel-box img.toestel-img {
+      position: absolute;
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
+      pointer-events: none;
+      /* Verwijder opacity als je echte afbeelding goed zichtbaar is */
+    }
+
+    /* =============================================
+       SCHERM 3 – MODAAL (parameters + resultaat + tips)
+    ============================================= */
+    #modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(27,36,40,.55);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    #modal-overlay.actief { display: flex; }
+
+    #modal {
+      background: #fff;
+      border-radius: var(--radius);
+      max-width: 520px;
+      width: 100%;
+      box-shadow: 0 20px 60px rgba(0,0,0,.22);
+      overflow: hidden;
+      animation: slideUp .3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    #modal-header {
+      background: var(--groen);
+      color: #fff;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #modal-header h3 { font-size: 1.15rem; }
+    #modal-sluiten {
+      background: transparent;
+      color: #fff;
+      font-size: 1.5rem;
+      line-height: 1;
+      padding: 0 4px;
+      border-radius: 6px;
+      transition: background .15s;
+    }
+    #modal-sluiten:hover { background: rgba(255,255,255,.2); }
+
+    #modal-body { padding: 22px 24px; }
+
+    /* STAP 1 – parameters invoeren */
+    #stap-parameters { display: block; }
+
+    .parameter-rij {
+      margin-bottom: 14px;
+    }
+    .parameter-rij label {
+      display: block;
+      font-weight: 700;
+      font-size: .88rem;
+      margin-bottom: 5px;
+      color: var(--donker);
+    }
+    .parameter-rij select,
+    .parameter-rij input[type="number"],
+    .parameter-rij input[type="text"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 2px solid #d4e6da;
+      border-radius: 8px;
+      font-family: 'Nunito', sans-serif;
+      font-size: .92rem;
+      transition: border-color .2s;
+    }
+    .parameter-rij select:focus,
+    .parameter-rij input:focus {
+      border-color: var(--groen-licht);
+      outline: none;
+    }
+
+    /* Bereken-knop */
+    #btn-bereken {
+      width: 100%;
+      padding: 12px;
+      background: var(--groen);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-top: 6px;
+      transition: background .2s, transform .1s;
+    }
+    #btn-bereken:hover { background: #1f4f3a; transform: translateY(-1px); }
+
+    /* STAP 2 – resultaat */
+    #stap-resultaat { display: none; }
+
+    #resultaat-box {
+      background: var(--groen-zacht);
+      border-radius: 12px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    #resultaat-box .resultaat-label {
+      font-size: .85rem;
+      color: var(--grijs);
+      margin-bottom: 4px;
+    }
+    #resultaat-getal {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--groen);
+    }
+    #resultaat-eenheid {
+      font-size: .9rem;
+      color: var(--grijs);
+      margin-top: 2px;
+    }
+
+    /* STAP 3 – tips & weetjes */
+    #stap-tips { display: none; }
+
+    #tips-box {
+      background: #fffbea;
+      border-left: 5px solid var(--geel);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 18px;
+    }
+    #tips-box h4 { font-size: 1rem; margin-bottom: 10px; color: #7a4f00; }
+    #tips-box ul { padding-left: 18px; }
+    #tips-box ul li { margin-bottom: 7px; font-size: .9rem; line-height: 1.5; }
+
+    #gemiddelde-box {
+      background: var(--groen-zacht);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 18px;
+      font-size: .88rem;
+      color: var(--donker);
+    }
+
+    /* Navigatieknoppen in modal */
+    .modal-nav {
+      display: flex;
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .modal-nav button {
+      flex: 1;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: .92rem;
+      font-weight: 700;
+      transition: background .2s, transform .1s;
+    }
+    .btn-terug {
+      background: #e8f4ee;
+      color: var(--groen);
+    }
+    .btn-terug:hover { background: #c8e6d4; }
+    .btn-verder {
+      background: var(--groen);
+      color: #fff;
+    }
+    .btn-verder:hover { background: #1f4f3a; transform: translateY(-1px); }
+    .btn-afsluiten {
+      background: var(--geel);
+      color: #7a4f00;
+    }
+    .btn-afsluiten:hover { background: #f0b800; }
+
+    /* =============================================
+       TERUG-KNOP (kamer → huis)
+    ============================================= */
+    #btn-terug-huis {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      color: var(--groen);
+      border: 2px solid var(--groen-licht);
+      border-radius: 10px;
+      padding: 8px 18px;
+      font-weight: 700;
+      font-size: .9rem;
+      margin-bottom: 20px;
+      transition: background .2s;
+    }
+    #btn-terug-huis:hover { background: var(--groen-zacht); }
+
+    /* =============================================
+       RESPONSIVE
+    ============================================= */
+    @media (max-width: 600px) {
+      main { padding: 0 10px; }
+      #modal { max-width: 100%; }
+    }
+
+    /* SVG kamers */
+    .kamer-boxSVG rect {
+      fill: rgba(82, 183, 136, 0.3);
+      stroke: #52b788;
+      stroke-width: 2;
+      stroke-dasharray: 6 4;
+      rx: 10;
+      ry: 10;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .kamer-boxSVG:hover rect {
+      fill: rgba(82, 183, 136, 0.6);
+    }
+
+    /* tekst */
+    .kamer-boxSVG text {
+      font-size: 12px;
+      font-weight: bold;
+      fill: #2d6a4f;
+      pointer-events: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .hidden {
+      display: none;
+    }

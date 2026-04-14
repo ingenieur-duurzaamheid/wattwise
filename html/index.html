@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>WattWise – Duurzaamheidsmeter</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-   <link rel="stylesheet" href="../css/style3.css">
+   <link rel="stylesheet" href="../css/style.css">
 
 </head>
 <body>
@@ -99,7 +99,10 @@
       <div id="stap-parameters">
         <div class="stap-lbl">Stap 1 van 3 — Jouw gegevens</div>
         <div id="params-container"></div>
-        <button id="btn-bereken" onclick="berekenVerbruik()">⚡ Bereken mijn verbruik</button>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+          <button id="btn-bereken" onclick="berekenVerbruik()">⚡ Bereken mijn verbruik</button>
+          <button id="btn-gebruik-gem" onclick="gebruikGemiddelde()" style="display:none;">📊 Gebruik dit gemiddelde</button>
+        </div>
       </div>
       <div id="stap-resultaat">
         <div class="stap-lbl">Stap 2 van 3 — Resultaat</div>
@@ -107,19 +110,27 @@
           <div class="res-lbl">Jouw dagelijks verbruik</div>
           <div id="res-getal">—</div>
           <div id="res-eenheid">kWh per dag</div>
+          <div id="res-bron" style="font-size:.7rem;margin-top:6px;opacity:.7;"></div>
+
         </div>
         <div class="cost-row">
           <div class="cpill"><div class="cpill-num" id="c-dag">—</div><div class="cpill-lbl">€/dag</div></div>
           <div class="cpill"><div class="cpill-num" id="c-maand">—</div><div class="cpill-lbl">€/maand</div></div>
           <div class="cpill"><div class="cpill-num" id="c-jaar">—</div><div class="cpill-lbl">€/jaar</div></div>
         </div>
+                <!-- Vergelijkingsbalk -->
+        <div id="cmp-box" style="display:none;"></div>
         <div class="modal-nav">
           <button class="btn-back" onclick="toonStap('parameters')">← Aanpassen</button>
           <button class="btn-next" onclick="toonStap('tips')">Tips →</button>
         </div>
       </div>
+
+      
+      <!-- STAP 3: TIPS -->
+
       <div id="stap-tips">
-        <div class="stap-lbl">Stap 3 van 3 — Tips & weetjes</div>
+        <div class="stap-lbl">Stap 3 van 3 — Tips &amp; weetjes</div>
         <div id="gem-box"></div>
         <div id="tips-box"><h4>💡 Bespaartips</h4><ul id="tips-lijst"></ul></div>
         <div class="modal-nav">
@@ -135,8 +146,8 @@
   WattWise &copy; 2026 · Duurzaamheidsproject · Data: <a href="https://data.europa.eu/data/datasets/670facfc5cbe4a7f2f56ace7" target="_blank">ADEME</a>
 </footer>
 
-<script src="../javascript/script3.js" defer></script>
-
+<!-- <script type="module" src="../javascript/main.js" defer></script> -->
+<script type="module"src="../javascript/main.js" defer></script>
 <style>
 @keyframes fadeSlideUp {
   from{opacity:0;transform:translateY(16px);}
