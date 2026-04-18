@@ -1,8 +1,8 @@
 import { KAMERS_DATA } from '../data/kamer_data.js';
 import { KAMER_SVG } from './svg_kamer.js';
 import { ICON_BASE } from '../config/icons.js';
-import { KAMER_POSITIES, KAMER_ZOOM, TARIEF } from '../config/app_config.js';
-import { berekeningen, setHuidigKamer, setHuidigToestel, resetNavigatie } from '../state/app_state.js';
+import { KAMER_POSITIES, KAMER_ZOOM } from '../config/app_config.js';
+import { berekeningen, setHuidigKamer, setHuidigToestel, resetNavigatie, getTarief, setTarief, getHuidigKamer } from '../state/app_state.js';
 
 export function initHouse(animatieNaarKamerHandler) {
   const houseWrap = document.getElementById('house-wrap');
@@ -186,17 +186,178 @@ export function bijwerkTotaalBadge(kamerId) {
   if (berekendeToestellen.length === 0) return;
 
   const totaal = berekendeToestellen.reduce((sum, t) => sum + berekeningen[t.id], 0);
+  const tarief = getTarief();
   const badge = document.createElement('div');
   badge.id = 'kamer-totaal-badge';
   badge.className = 'kamer-totaal-badge';
   badge.innerHTML = `
     <span class="tot-lbl">📊 Totaal berekend (${berekendeToestellen.length}/${kamer.toestellen.length} toestellen)</span>
     <span class="tot-kwh">${totaal.toFixed(2)} kWh/dag</span>
-    <span class="tot-eur">≈ €${(totaal * TARIEF * 365).toFixed(0)}/jaar</span>
+    <span class="tot-eur">≈ €${(totaal * tarief * 365).toFixed(0)}/jaar</span>
   `;
   scene.appendChild(badge);
 }
 
+export function bijwerkStatsStrip() {
+  _bijwerkTariefBadge();
+  _bijwerkVerbruikBadge();
+  _bijwerkKamersBadge();
+}
+
+function _bijwerkTariefBadge() {
+  const el = document.getElementById('stat-tarief-num');
+  if (el) el.textContent = `€${getTarief().toFixed(3)}`;
+}
+
+function _bijwerkVerbruikBadge() {
+  const el = document.getElementById('stat-verbruik-num');
+  if (!el) return;
+  const totaal = Object.values(berekeningen).reduce((s, v) => s + v, 0);
+  el.textContent = totaal > 0 ? totaal.toFixed(2) : '-';
+}
+
+function _bijwerkKamersBadge() {
+  const el = document.getElementById('stat-kamers-num');
+  if (!el) return;
+  const totaalKamers = Object.keys(KAMERS_DATA).length;
+  const berekend = Object.keys(KAMERS_DATA).filter(kamerId =>
+    KAMERS_DATA[kamerId].toestellen.some(t => berekeningen[t.id] !== undefined)
+  ).length;
+  const teGaan = totaalKamers - berekend;
+  el.textContent = teGaan;
+
+  const lbl = document.getElementById('stat-kamers-lbl');
+  if (lbl) lbl.innerHTML = teGaan === 0
+    ? 'kamers<br><span style="color:var(--g3)">✓ klaar!</span>'
+    : 'kamers<br>nog te verkennen';
+}
+
+const LEVERANCIERS = [
+  { naam: 'Engie', tarief: 0.330 }, // easy fixed (vast contract)
+  { naam: 'Luminus', tarief: 0.341 }, // maxxfix 2jaar (vast contract)
+  { naam: 'Fluvius', tarief: 0.328 }, // maximumtarief voor midden-vlaanderen
+  { naam: 'TotalEnergies', tarief: 0.279 }, // elektriciteit VARIABEL
+  { naam: 'Mega', tarief: 0.287 },  // smart fixed (vast contract)
+  { naam: 'Eneco', tarief: 0.324 }, // zon & wind vast
+  { naam: 'Zelf ingeven', tarief: null },
+];
+
+export function initTariefPicker() {
+  const badge = document.getElementById('stat-badge-tarief');
+  if (!badge) return;
+  badge.style.cursor = 'pointer';
+  badge.title = 'Klik om tarief te wijzigen';
+  badge.addEventListener('click', _openTariefPopup);
+}
+
+function _openTariefPopup() {
+  document.getElementById('tarief-popup')?.remove();
+
+  const popup = document.createElement('div');
+  popup.id = 'tarief-popup';
+  popup.className = 'tarief-popup';
+  popup.innerHTML= `
+    <div class="tarief-popup-titel">⚡ Kies jouw leverancier</div>
+    <div class="tarief-popup-lijst">
+      ${LEVERANCIERS.map(l => `
+        <button class="tarief-optie${l.tarief === getTarief() ? ' actief' : ''}"
+                data-tarief="${l.tarief ?? ''}"
+                data-naam="${l.naam}">
+          <span class="tarief-naam">${l.naam}</span>
+          ${l.tarief ? `<span class="tarief-val">€${l.tarief.toFixed(3)}/kWh</span>` : ''}
+        </button>
+      `).join('')}
+    </div>
+    <div id="tarief-eigen-wrap" style="display:none;margin-top:8px;">
+      <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:4px;">
+        Jouw tarief (€/kWh)
+      </label>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input id="tarief-eigen-inp" type="number" min="0.01" max="1"
+               step="0.001" value="${getTarief().toFixed(3)}"
+               style="width:90px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--border);font-size:.9rem;">
+        <button id="tarief-eigen-ok" class="tarief-optie" style="padding:6px 14px;">OK</button>
+      </div>
+    </div>
+    <button class="tarief-sluit" id="tarief-sluit">✕</button>
+  `;
+
+  const badge = document.getElementById('stat-badge-tarief');
+  const rect = badge.getBoundingClientRect();
+  popup.style.cssText = `
+    position:fixed;
+    top:${rect.bottom + 8}px;
+    left:${Math.max(8, rect.left - 20)}px;
+    z-index:9999;
+  `;
+
+  document.body.appendChild(popup);
+
+  const sluitBuiten = (e) => {
+    if (!popup.contains(e.target) && e.target !== badge) {
+      popup.remove();
+      document.removeEventListener('click', sluitBuiten);
+    }
+  };
+
+  setTimeout(() => document.addEventListener('click', sluitBuiten), 10);
+
+  popup.querySelector('#tarief-sluit').addEventListener('click', () => popup.remove());
+
+  popup.querySelectorAll('.tarief-optie[data-naam]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const naam = btn.dataset.naam;
+      const tarief = btn.dataset.tarief;
+
+      if (naam === 'Zelf ingeven') {
+        popup.querySelector('#tarief-eigen-wrap').style.display = '';
+        return;
+      }
+      setTarief(tarief);
+      _herbereken();
+      bijwerkStatsStrip();
+      popup.remove();
+    });
+  });
+
+  popup.querySelector('#tarief-eigen-ok')?.addEventListener('click', () => {
+    const val = popup.querySelector('#tarief-eigen-inp').value;
+    setTarief(val);
+    _herbereken();
+    bijwerkStatsStrip();
+    popup.remove();
+  });
+
+  
+}
+
+function _herbereken() {
+  const tarief = getTarief();
+
+  const dagEl = document.getElementById('c-dag');
+  const maandEl = document.getElementById('c-maand');
+  const jaarEl = document.getElementById('c-jaar');
+  const resGetal = document.getElementById('res-getal');
+
+  if (dagEl && resGetal) {
+    const kwh = parseFloat(resGetal.textContent);
+    if (!isNaN(kwh)){
+      dagEl.textContent = `€${(kwh * tarief).toFixed(2)}`;
+      maandEl.textContent = `€${(kwh * tarief * 30).toFixed(2)}`;
+      jaarEl.textContent  = `€${(kwh * tarief * 365).toFixed(0)}`;
+    }
+  }
+
+  const kamerId = getHuidigKamer();
+  if (kamerId) bijwerkTotaalBadge(kamerId);
+
+  Object.keys(KAMERS_DATA).forEach(kamerId => {
+    const kamer = KAMERS_DATA[kamerId];
+    const totaalEl = document.getElementById('kamer-totaal-badge');
+    if (totaalEl) bijwerkTotaalBadge(kamerId);
+  })
+
+}
 
 window.toonHuis = toonHuis;
 window.toonKamer = toonKamer;

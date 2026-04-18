@@ -34,9 +34,18 @@
         <p>Klik op een kamer in het huis om te ontdekken welke toestellen energie verbruiken.</p>
       </div>
       <div class="stats-strip">
-        <div class="stat-badge"><div class="stat-badge-num">8.5</div><div class="stat-badge-lbl">kWh/dag<br>gemiddeld</div></div>
-        <div class="stat-badge"><div class="stat-badge-num">€0.28</div><div class="stat-badge-lbl">per kWh<br>tarief</div></div>
-        <div class="stat-badge"><div class="stat-badge-num">6</div><div class="stat-badge-lbl">kamers<br>te verkennen</div></div>
+        <div class="stat-badge" id="stat-badge-tarief">
+          <div class="stat-badge-num" id="stat-tarief-num">€0.280</div>
+          <div class="stat-badge-lbl">per kWh<br>tarief ✏️</div>
+        </div>
+        <div class="stat-badge">
+          <div class="stat-badge-num" id="stat-verbruik-num">—</div>
+          <div class="stat-badge-lbl">kWh/dag<br>berekend</div>
+        </div>
+        <div class="stat-badge">
+          <div class="stat-badge-num" id="stat-kamers-num">6</div>
+          <div class="stat-badge-lbl" id="stat-kamers-lbl">kamers<br>nog te verkennen</div>
+        </div>
       </div>
     </div>
 

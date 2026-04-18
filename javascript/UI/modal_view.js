@@ -1,8 +1,9 @@
 import { KAMERS_DATA } from '../data/kamer_data.js';
 import { ADEME, LABEL_KLEUREN } from '../data/appliance_kwh.js';
-import { berekeningen, getHuidigKamer, getHuidigToestel, setHuidigToestel } from '../state/app_state.js';
+import { berekeningen, getHuidigKamer, getHuidigToestel, setHuidigToestel, getTarief } from '../state/app_state.js';
 import { ICON_BASE } from '../config/icons.js';
-import { TARIEF } from '../config/app_config.js';
+import { bijwerkStatsStrip } from './house_view.js';
+// import { TARIEF } from '../config/app_config.js';
 
 
 // Deze twee variabelen worden later gevuld via initModalHandlers().
@@ -11,7 +12,7 @@ import { TARIEF } from '../config/app_config.js';
 let refreshRoom = null;   // Functie om de kamerpagina opnieuw op te bouwen
 let updateRoomTotal = null;  // Functie om de totaalverbruik-badge in de kamer bij te werken
 
-
+let updateStatsStrip = null; // om de stats badges op de huispagina bij te werken
 
 /**
  * NIET ZO BELANGRIJK
@@ -24,9 +25,10 @@ let updateRoomTotal = null;  // Functie om de totaalverbruik-badge in de kamer b
  *   - bijwerkTotaalBadgeHandler: wordt aangeroepen na een berekening
  *     om de totaalbadge onderaan de kamerscène bij te werken.
  */
-export function initModalHandlers({ toonKamerHandler, bijwerkTotaalBadgeHandler }) {
+export function initModalHandlers({ toonKamerHandler, bijwerkTotaalBadgeHandler, bijwerkStatsStripHandler }) {
   refreshRoom = toonKamerHandler;
   updateRoomTotal = bijwerkTotaalBadgeHandler;
+  updateStatsStrip = bijwerkStatsStripHandler;
 
   const overlay = document.getElementById('modal-overlay');
   if (overlay) {
@@ -431,7 +433,7 @@ export function gebruikGemiddelde() {
  *
  * Vult de volgende onderdelen in:
  *   - Het kWh-getal en de eenheid
- *   - De kostenpillen (€/dag, €/maand, €/jaar) op basis van het vaste tarief (€0,28/kWh)
+ *   - De kostenpillen (€/dag, €/maand, €/jaar) op basis van het gekozen tarief (standaard €0,28/kWh)
  *   - Een bronlabel dat aangeeft of het resultaat eigen invoer of een gemiddelde is
  *   - Een vergelijkingsbalk "Jij vs. gemiddeld Frans huishouden"
  *   - Slaat het resultaat op in het globale berekeningen-object (zodat de kamer
@@ -453,9 +455,9 @@ export function toonResultaat(kwh, isGemiddelde) {
 
   document.getElementById('res-getal').textContent = kwh;
   document.getElementById('res-eenheid').textContent = t.eenheid;
-  document.getElementById('c-dag').textContent = `€${(kwh * TARIEF).toFixed(2)}`;
-  document.getElementById('c-maand').textContent = `€${(kwh * TARIEF * 30).toFixed(2)}`;
-  document.getElementById('c-jaar').textContent = `€${(kwh * TARIEF * 365).toFixed(0)}`;
+  document.getElementById('c-dag').textContent = `€${(kwh * getTarief()).toFixed(2)}`;
+  document.getElementById('c-maand').textContent = `€${(kwh * getTarief() * 30).toFixed(2)}`;
+  document.getElementById('c-jaar').textContent = `€${(kwh * getTarief() * 365).toFixed(0)}`;
 
   // Bronlabel: geeft transparantie over de herkomst van de waarde
   const bronLabel = document.getElementById('res-bron');
@@ -508,6 +510,8 @@ export function toonResultaat(kwh, isGemiddelde) {
       lijst.appendChild(li);
     });
   }
+
+  if (typeof updateStatsStrip === 'function') updateStatsStrip();
 
   toonStap('resultaat');
   // // handmatig schakelen (zoals jouw test)

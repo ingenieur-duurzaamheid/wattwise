@@ -1,5 +1,5 @@
 :root {
-  --g1:#0a2e1a; --g2:#1a5c38; --g3:#2d9e5f; --g4:#5dd68e; --g5:#c8f5db;
+  --g1:#0a2e1a; --g2:#1a5c38; --g3:#2d9e5f; --g3-light: #e8f8f0; --g4:#5dd68e; --g5:#c8f5db;
   --amber:#f5c842; --amber2:#e8a80a; --bg:#f0f7f3;
   --surface:#ffffff; --text:#0d1f16; --muted:#607a6b; --border:#d0eada;
   --shadow:0 4px 24px rgba(10,46,26,.10); --shadow-lg:0 12px 48px rgba(10,46,26,.16);
@@ -636,4 +636,67 @@ footer a{color:var(--g4);}
   .cmp-rij { flex-wrap:wrap; }
   .cmp-val { min-width:auto; }
   #btn-bereken, #btn-gebruik-gem { font-size:.82rem;padding:10px; }
+}
+
+.tarief-popup {
+  position: relative;
+  background: #ffffff;
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18);
+  min-width: 230px;
+  animation: fadeSlideUp .18s ease both;
+}
+.tarief-popup-titel {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: .88rem;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+.tarief-popup-lijst {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.tarief-optie {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 9px;
+  border: 1.5px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  font-size: .82rem;
+  color: var(--text);
+  transition: background .15s, border-color .15s;
+}
+.tarief-optie:hover {
+  background: var(--g3-light, #e8d8f0);
+  border-color: var(--g3);
+  color: var(--g3);
+}
+
+.tarief-optie.actief {
+  background: var(--g3);
+  border-color: var(--g3);
+  color: #fff;
+  font-weight: 700;
+}
+.tarief-optie .tarief-val {
+  font-weight: 700;
+  font-size: .78rem;
+  opacity: .85;
+}
+.tarief-sluit {
+  position: absolute;
+  top: 8px; right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: .9rem;
+  color: var(--muted);
 }
