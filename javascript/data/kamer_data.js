@@ -19,16 +19,16 @@ export const KAMERS_DATA = {
             label: "Energielabel (optioneel)",
             type: "label_select",
             labelOpties: ["A", "B", "C", "D", "E", "F", "G", "Onbekend"],
-            tooltip: "Staat achteraan op het toestel of in de handleiding"
+            tooltip: "Staat vaak achteraan op het toestel of in de handleiding. Het oude A++-label is niet meer geldig sinds 2021. Deze zijn lineair verschoven: A++ wordt A, A+ wordt B, A wordt C, enz. Kies Onbekend als je het label niet kent of als het een ouder toestel is zonder label."
           },
           {
             id: "type",
-            label: "Type televisie",
+            label: "Type televisie (niet relevant als label bekend is)",
             type: "select",
             opties: [
-              ['LCD/LED (40–50")', 80],
-              ['OLED (50–60")', 120],
-              ['Plasma (oud)', 200]
+              ['LCD/LED (40 inch)', 40],
+              ['OLED (40 inch)', 100],
+              ['Plasma (40 inch)', 250]
             ],
             defaultVal: 0
           },
@@ -44,25 +44,26 @@ export const KAMERS_DATA = {
           },
           {
             id: "sb",
-            label: "Stand-by 's nachts?",
+            label: "Stand-by aan?",
             type: "select",
-            opties: [["Ja (+1W)", 1], ["Nee", 0]],
-            defaultVal: 1
+            opties: [["Ja (+0,5W)", 0.5], ["Nee", 0]],
+            defaultVal: 1,
+            tooltip: "Zet je jouw TV volledig uit of op stand-by?"
           },
         ],
         berekenVerbruik(p) {
           if (p.label_tv && p.label_tv !== "Onbekend") {
-            const labelWatt = { A: 50, B: 80, C: 100, D: 130, E: 160, F: 190, G: 220 };
+            const labelWatt = { A: 30, B: 40, C: 50, D: 70, E: 100, F: 130, G: 165 };
             const w = labelWatt[p.label_tv] || +p.type;
-            return Math.round(((w * (+p.uren || 0) + (+p.sb || 0) * 24) / 1000) * 100) / 100;
+            return Math.round(((w * (+p.uren || 0) + (+p.sb || 0) * (24 - (+p.uren || 0))) / 1000) * 100) / 100; // * 100 en / 100 om af te ronden op 2 decimalen
           }
-          return Math.round((((+p.type) * (+p.uren || 0) + (+p.sb || 0) * 24) / 1000) * 100) / 100;
+          return Math.round((((+p.type) * (+p.uren || 0) + (+p.sb || 0) * (24 - (+p.uren || 0)) ) / 1000) * 100) / 100;
         },
         eenheid: "kWh per dag",
-        gemiddelde: "Een gemiddeld gezin kijkt ongeveer 4 uur per dag tv.",
+        gemiddelde: "Een gemiddeld gezin kijkt ongeveer 4 uur per dag tv.", // "weetjes"
         tips: [
           "Zet de tv volledig uit in plaats van stand-by.",
-          "Een zuiniger energielabel verbruikt merkbaar minder.",
+          "Een kleinere tv verbruikt minder dan een grote.",
           "Gebruik de slaaptimer.",
           "Verlaag de helderheid voor een lager verbruik."
         ],

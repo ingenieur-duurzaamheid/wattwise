@@ -527,34 +527,94 @@ export function toonResultaat(kwh, isGemiddelde) {
 
 
 /**
- * NIET ZO BELANGRIJK
+ * niet zo belangrijk.
  * Navigeert naar een bepaalde stap in de modal en werkt de voortgangsindicatoren bij.
  *
- * De modal bestaat uit drie stappen:
- *   1. 'parameters' – invoerformulier
- *   2. 'resultaat'  – berekend verbruik + vergelijking
- *   3. 'tips'       – bespaartips en gemiddelde
+ * Stappen:
+ *   1. 'parameters'
+ *   2. 'resultaat'
+ *   3. 'tips'
  *
- * Per stap worden ook bijgewerkt:
- *   - De drie voortgangsdots bovenaan de modal (●○○ / ●●○ / ●●●)
- *   - De groene voortgangsbalk (33% / 66% / 100%)
- *   - De totaalverbruik-badge in de kamer-scene (enkel op stap 2 en 3)
+ * Updates:
+ *   - Voortgangsdots (●○○ / ●●○ / ●●●)
+ *   - Groene voortgangsbalk (33% / 66% / 100%)
+ *   - Totaalverbruik-badge (enkel zichtbaar bij stap 2 en 3)
  *
- * @param {'parameters' | 'resultaat' | 'tips'} stap - De naam van de te tonen stap.
+ * @param {'parameters' | 'resultaat' | 'tips'} stap
  */
 export function toonStap(stap) {
-  const stappen = {
-    parameters: document.getElementById('stap-parameters'),
-    resultaat: document.getElementById('stap-resultaat'),
-    tips: document.getElementById('stap-tips')
-  };
 
-  Object.values(stappen).forEach(el => {
-    if (el) el.style.display = 'none';
-  });
+  /* =========================
+     1. STAPPEN TONEN
+  ========================== */
 
-  if (stappen[stap]) {
-    stappen[stap].style.display = 'block';
+  const stapParameters = document.getElementById('stap-parameters');
+  const stapResultaat  = document.getElementById('stap-resultaat');
+  const stapTips       = document.getElementById('stap-tips');
+
+  if (stapParameters) stapParameters.style.display = 'none';
+  if (stapResultaat)  stapResultaat.style.display  = 'none';
+  if (stapTips)       stapTips.style.display       = 'none';
+
+  if (stap === 'parameters' && stapParameters) stapParameters.style.display = 'block';
+  if (stap === 'resultaat'  && stapResultaat)  stapResultaat.style.display  = 'block';
+  if (stap === 'tips'       && stapTips)       stapTips.style.display       = 'block';
+
+
+  /* =========================
+     2. STAP INDEX BEPALEN
+  ========================== */
+
+  let stapIndex = 0;
+  if (stap === 'resultaat') stapIndex = 1;
+  if (stap === 'tips')      stapIndex = 2;
+
+
+  /* =========================
+     3. BOLLETJES BIJWERKEN
+     (HTML gebruikt d1 d2 d3 + class "on")
+  ========================== */
+
+  const d1 = document.getElementById('d1');
+  const d2 = document.getElementById('d2');
+  const d3 = document.getElementById('d3');
+
+  if (d1) d1.classList.remove('on');
+  if (d2) d2.classList.remove('on');
+  if (d3) d3.classList.remove('on');
+
+  if (stapIndex >= 0 && d1) d1.classList.add('on');
+  if (stapIndex >= 1 && d2) d2.classList.add('on');
+  if (stapIndex >= 2 && d3) d3.classList.add('on');
+
+
+  /* =========================
+     4. PROGRESSBAR BIJWERKEN
+     (HTML gebruikt id="mpbar")
+  ========================== */
+
+  const progressBar = document.getElementById('mpbar');
+
+  if (progressBar) {
+    if (stapIndex === 0) progressBar.style.width = '33.3%';
+    if (stapIndex === 1) progressBar.style.width = '66.6%';
+    if (stapIndex === 2) progressBar.style.width = '100%';
+  }
+
+
+  /* =========================
+     5. KAMER TOTAAL BADGE
+     (alleen zichtbaar bij stap 2 en 3)
+  ========================== */
+
+  const kamerBadge = document.querySelector('.kamer-totaal-badge');
+
+  if (kamerBadge) {
+    if (stap === 'resultaat' || stap === 'tips') {
+      kamerBadge.style.display = 'flex';
+    } else {
+      kamerBadge.style.display = 'none';
+    }
   }
 }
 
