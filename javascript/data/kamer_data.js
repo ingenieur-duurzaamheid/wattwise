@@ -116,7 +116,8 @@ export const KAMERS_DATA = {
         tips: [
           "Vervang gloeilampen door LED.",
           "Gebruik bewegingssensoren waar mogelijk.",
-          "Maak maximaal gebruik van daglicht."
+          "Maak maximaal gebruik van daglicht.",
+          "Stem de verlichting af op wat nodig is met een dimmer."
         ],
       },
       {
@@ -259,7 +260,8 @@ export const KAMERS_DATA = {
         tips: [
           "Stel in op 4 à 5°C.",
           "Laat warme gerechten eerst afkoelen.",
-          "Controleer de deurrubbers regelmatig."
+          "Controleer de deurrubbers regelmatig.",
+          "Steek je koelkast niet te vol."
         ],
       },
       {
@@ -300,7 +302,7 @@ export const KAMERS_DATA = {
         tips: [
           "Gebruik bij voorkeur de eco-stand.",
           "Start pas als het toestel goed gevuld is.",
-          "Laat indien mogelijk aan de lucht drogen."
+          "Laat indien mogelijk aan de lucht drogen.",
         ],
       },
       {
@@ -420,7 +422,8 @@ export const KAMERS_DATA = {
         tips: [
           "Hetelucht is vaak zuiniger.",
           "Verwarm niet langer voor dan nodig.",
-          "Gebruik restwarmte."
+          "Gebruik restwarmte.",
+          "Bak meerdere gerechten tegelijk."
         ],
       },
     ],
@@ -727,7 +730,8 @@ export const KAMERS_DATA = {
         tips: [
           "Gebruik de eco-stand.",
           "Was met volle trommel.",
-          "30°C volstaat vaak voor normaal wasgoed."
+          "30°C volstaat vaak voor normaal wasgoed.",
+          "Centrifugeer op de hoogste stand als de was in de droger gaat."
         ],
       },
       {
@@ -768,7 +772,8 @@ export const KAMERS_DATA = {
         tips: [
           "Luchten is het zuinigst.",
           "Kies bij vervanging voor een warmtepompdroogkast.",
-          "Goed centrifugeren helpt."
+          "Goed centrifugeren helpt.",
+          "Houd de filters proper."
         ],
       },
       {

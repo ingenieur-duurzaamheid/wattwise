@@ -183,7 +183,11 @@ export function bouwParameterFormulier(t) {
       // Visuele kleurlegenda: klikbare gekleurde labels waarmee je snel kunt kiezen
       const legenda = document.createElement('div');
       legenda.className = 'label-legenda';
-      Object.entries(LABEL_KLEUREN).slice(0, 7).forEach(([label, kleur]) => {
+
+      const opties = param.labelOpties.filter(l => l !== 'Onbekend');
+
+      opties.forEach( label => {
+        const kleur = LABEL_KLEUREN[label] || "#ccc";
         const b = document.createElement('span');
         b.className = 'lbl-badge';
         b.style.background = kleur;
