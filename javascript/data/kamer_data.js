@@ -30,6 +30,7 @@ export const KAMERS_DATA = {
               ['OLED (40 inch)', 100],
               ['Plasma (40 inch)', 250]
             ],
+            tooltip:"Deze berekeningen gaan uit van een 40 inch tv. Grotere schermen verbruiken meer, kleinere minder.",
             defaultVal: 0
           },
           {
@@ -93,9 +94,10 @@ export const KAMERS_DATA = {
             label: "Aantal lampen",
             type: "number",
             min: 1,
-            max: 20,
+            max: 50,
             stap: 1,
             eenheid: "stuks",
+            tooltip: "Dit gaat over het totaal aantal lampen in je hele woning, niet alleen in de woonkamer. Exclusief de garage",
             defaultVal: 3
           },
           {
@@ -251,7 +253,7 @@ export const KAMERS_DATA = {
         ],
         berekenVerbruik(p) {
           if (p.label_koel && p.label_koel !== "Onbekend") {
-            const labelJaar = { A: 150, B: 200, C: 260, D: 330, E: 400, F: 500, G: 600 };
+            const labelJaar = { A: 110, B: 140, C: 160, D: 190, E: 240, F: 290, G: 390 };
             return Math.round(((labelJaar[p.label_koel] || 150) / 365) * 100) / 100;
           }
           return Math.round(((+p.type * (+p.vul || 1)) / 365) * 100) / 100;
@@ -262,7 +264,8 @@ export const KAMERS_DATA = {
           "Stel in op 4 à 5°C.",
           "Laat warme gerechten eerst afkoelen.",
           "Controleer de deurrubbers regelmatig.",
-          "Steek je koelkast niet te vol."
+          "Steek je koelkast niet te vol.",
+          "Zet de koelkast uit tijdens langere afwezigheid."
         ],
       },
       {
@@ -424,7 +427,8 @@ export const KAMERS_DATA = {
           "Hetelucht is vaak zuiniger.",
           "Verwarm niet langer voor dan nodig.",
           "Gebruik restwarmte.",
-          "Bak meerdere gerechten tegelijk."
+          "Bak meerdere gerechten tegelijk.",
+          "Gebruik een microgolf voor kleinere porties."
         ],
       },
     ],
@@ -521,7 +525,8 @@ export const KAMERS_DATA = {
         tips: [
           "Stel in op 55 tot 60°C.",
           "Isoleer waar mogelijk de leidingen.",
-          "Een warmtepompboiler is zuiniger."
+          "Een warmtepompboiler is zuiniger.",
+          "Let op: deze tool houdt geen rekening met stilstandverliezen, dus het werkelijke verbruik kan hoger liggen, vooral bij oudere boilers."
         ],
       },
       {
@@ -557,7 +562,8 @@ export const KAMERS_DATA = {
         gemiddelde: "Een scheerapparaat verbruikt meestal erg weinig.",
         tips: [
           "Laad enkel op wanneer nodig.",
-          "Koppel na het laden los."
+          "Koppel na het laden los.",
+          "Door afronding kan het verbruik soms 0 kWh/dag tonen, maar er is wel degelijk een klein verbruik."
         ],
       },
     ],
@@ -616,7 +622,7 @@ export const KAMERS_DATA = {
             id: "type",
             label: "Oplader",
             type: "select",
-            opties: [["Normaal (5W)", 5], ["Snellader (20W)", 20], ["Draadloos (15W)", 15]],
+            opties: [["Normaal (max. 5W)", 4], ["Snellader (max. 20W)", 17], ["Draadloos (max. 15W)", 13]],
             defaultVal: 0
           },
           {
@@ -626,6 +632,7 @@ export const KAMERS_DATA = {
             min: 0,
             max: 12,
             stap: 0.5,
+            tooltip: "Een telefoon die 2u nodig heeft om op te laden, maar slechts 1u aan de lader ligt, telt als 1u. Een telefoon die 2u nodig heeft om op te laden, maar 3u aan de lader ligt, telt als 2u.",
             eenheid: "uur",
             defaultVal: 7
           },
@@ -637,7 +644,7 @@ export const KAMERS_DATA = {
         gemiddelde: "Telefoons laden kost relatief weinig stroom per dag.",
         tips: [
           "Laad liever met kabel dan draadloos.",
-          "Laat de lader niet onnodig in het stopcontact."
+          "Laat de lader niet onnodig in het stopcontact. Ook zonder toestel kan een lader nog steeds stroom verbruiken."
         ],
       },
       {
@@ -696,7 +703,7 @@ export const KAMERS_DATA = {
             id: "label_wm",
             label: "Energielabel",
             type: "label_select",
-            labelOpties: ["A-30%", "A-20%", "A-10%", "A", "B", "C", "D", "E", "Onbekend"],
+            labelOpties: ["A", "B", "C", "D", "E", "F", "G", "Onbekend"],
             tooltip: "Kies het label als je het kent, anders blijft Onbekend staan"
           },
           {
@@ -712,14 +719,13 @@ export const KAMERS_DATA = {
         ],
         berekenVerbruik(p) {
           const wmLabels = {
-            "A-30%": 0.36,
-            "A-20%": 0.37,
-            "A-10%": 0.41,
-            "A": 0.45,
-            "B": 0.51,
-            "C": 0.59,
-            "D": 0.69,
-            "E": 0.78,
+            "A": 0.37,
+            "B": 0.41,
+            "C": 0.45,
+            "D": 0.51,
+            "E": 0.59,
+            "F": 0.69,
+            "G": 0.78,
           };
           const kwhPerWas = (p.label_wm && p.label_wm !== "Onbekend")
             ? (wmLabels[p.label_wm] || 0.45)
@@ -732,7 +738,8 @@ export const KAMERS_DATA = {
           "Gebruik de eco-stand.",
           "Was met volle trommel.",
           "30°C volstaat vaak voor normaal wasgoed.",
-          "Centrifugeer op de hoogste stand als de was in de droger gaat."
+          "Centrifugeer op de hoogste stand als de was in de droger gaat.",
+          "Let op: deze tool gaat uit van wassen op 40°C. Wassen op 60°C of 90°C verbruikt aanzienlijk meer energie, dus als je vaak op hogere temperaturen wast, kan het werkelijke verbruik hoger liggen dan hier berekend."
         ],
       },
       {
@@ -804,7 +811,7 @@ export const KAMERS_DATA = {
             max: 120,
             stap: 5,
             eenheid: "min",
-            defaultVal: 20
+            defaultVal: 5
           },
         ],
         berekenVerbruik(p) {
@@ -862,6 +869,7 @@ export const KAMERS_DATA = {
             max: 24,
             stap: 0.5,
             eenheid: "uur",
+            tooltip: "Let op: deze tool rekent per dag, dus als je bijvoorbeeld 7 uur per week laadt, vul je hier 1 uur/dag in (7 uur/week ÷ 7 dagen/week).",
             defaultVal: 3
           },
           {
@@ -872,6 +880,7 @@ export const KAMERS_DATA = {
             max: 2000,
             stap: 10,
             eenheid: "km",
+            tooltip:"We rekenen aan 18 kWh per 100 km en een laadverlies van 15%",
             defaultVal: 200
           },
         ],
@@ -894,7 +903,7 @@ export const KAMERS_DATA = {
         label: "Diepvriezer",
         emoji: "🧊",
         icon: ICONS.diepvriezer,
-        ademeKey: "koelkast",
+        ademeKey: "diepvries",
         pos: { left: "40%", bottom: "26%" },
         parameters: [
           {

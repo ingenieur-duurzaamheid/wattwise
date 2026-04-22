@@ -1,14 +1,14 @@
-/* ── ADEME GEMIDDELDEN (kWh/dag, n=500 Franse huishoudens) ── */
+/* ── ADEME GEMIDDELDEN (kWh/dag, n=500 Franse huishoudens) ── */ //aangepast via python file
 
 export const ADEME = {
-  tv:           { kwh: 1.125, label: "TV (ADEME, 500 huishoudens)" },
-  verlichting:  { kwh: 1.116, label: "Verlichting (ADEME)" },
-  computer:     { kwh: 1.124, label: "Computer/laptop (ADEME)" },
+  tv:           { kwh: 0.1584, label: "TV (ADEME)" },
+  verlichting:  { kwh: 0.6576, label: "Verlichting (ADEME)" },
+  computer:     { kwh: 0.26, label: "Computer/laptop (ADEME)" },
   koelkast:     { kwh: 0.307, label: "Koelkast (ADEME)" },
-  vaatwasser:   { kwh: 1.130, label: "Vaatwasser (ADEME)" },
-  microgolf:    { kwh: 1.128, label: "Microgolf (ADEME)" },
-  oven:         { kwh: 1.133, label: "Oven (ADEME)" },
-  wasmachine:   { kwh: 1.131, label: "Wasmachine (ADEME)" },
+  vaatwasser:   { kwh: 0.444, label: "Vaatwasser (ADEME)" },
+  microgolf:    { kwh: 0.1872, label: "Microgolf (ADEME)" },
+  oven:         { kwh: 0.4, label: "Oven (ADEME)" },
+  wasmachine:   { kwh: 0.2775, label: "Wasmachine (ADEME)" },
   // Niet in ADEME → eigen schattingen op basis van literatuur
   waterkoker:   { kwh: 0.10,  label: "Waterkoker (schatting literatuur)" },
   haardroger:   { kwh: 0.20,  label: "Haardroger (schatting literatuur)" },
@@ -21,7 +21,8 @@ export const ADEME = {
   gsm:          { kwh: 0.02,  label: "GSM opladen (schatting literatuur)" },
   el_deken:     { kwh: 0.48,  label: "Elektrische deken (schatting literatuur)" },
   scheerapparaat:{ kwh: 0.002, label: "Scheerapparaat (schatting literatuur)" },
-  radio:        { kwh: 0.04,  label: "Radio/stereo (schatting literatuur)" },
+  radio:        { kwh: 0.264,  label: "Radio/stereo (ADEME)" },
+  diepvries:        { kwh: 0.7896,  label: "Diepvriezer (ADEME)" },
 };
 
 
