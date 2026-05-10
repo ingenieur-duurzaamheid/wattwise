@@ -1,0 +1,51 @@
+[
+  {
+    "leverancier": "Engie",
+    "contract": "Easy Fixed",
+    "dagTarief": 0.330,
+    "nachtTarief": 0.298,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "Luminus",
+    "contract": "MaxxFix 2jaar",
+    "dagTarief": 0.341,
+    "nachtTarief": 0.305,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "Fluvius",
+    "contract": "Maximumtarief Midden-Vlaanderen",
+    "dagTarief": 0.328,
+    "nachtTarief": 0.295,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "TotalEnergies",
+    "contract": "Elektriciteit Variabel",
+    "dagTarief": 0.279,
+    "nachtTarief": 0.251,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "Mega",
+    "contract": "Smart Fixed",
+    "dagTarief": 0.287,
+    "nachtTarief": 0.258,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "Eneco",
+    "contract": "Zon & Wind Vast",
+    "dagTarief": 0.324,
+    "nachtTarief": 0.291,
+    "laatsteUpdate": "2026-05-10"
+  },
+  {
+    "leverancier": "Zelf ingeven",
+    "contract": null,
+    "dagTarief": null,
+    "nachtTarief": null,
+    "laatsteUpdate": null
+  }
+]

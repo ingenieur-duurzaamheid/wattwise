@@ -700,3 +700,35 @@ footer a{color:var(--g4);}
   font-size: .9rem;
   color: var(--muted);
 }
+
+.tarief-modus-toggle {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.tarief-modus-btn {
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all .15s;
+}
+
+.tarief-modus-btn.actief {
+  background: var(--g3);
+  color: #fff;
+  border-color: var(--g3);
+}
+
+.tarief-optie .tarief-contract {
+  font-size: .72rem;
+  opacity: .6;
+  font-weight: 400;
+  margin-left: 4px;
+}

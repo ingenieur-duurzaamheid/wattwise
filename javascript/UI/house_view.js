@@ -232,15 +232,33 @@ function _bijwerkKamersBadge() {
     : 'kamers<br>nog te verkennen';
 }
 
-const LEVERANCIERS = [
-  { naam: 'Engie', tarief: 0.330 }, // easy fixed (vast contract)
-  { naam: 'Luminus', tarief: 0.341 }, // maxxfix 2jaar (vast contract)
-  { naam: 'Fluvius', tarief: 0.328 }, // maximumtarief voor midden-vlaanderen
-  { naam: 'TotalEnergies', tarief: 0.279 }, // elektriciteit VARIABEL
-  { naam: 'Mega', tarief: 0.287 },  // smart fixed (vast contract)
-  { naam: 'Eneco', tarief: 0.324 }, // zon & wind vast
-  { naam: 'Zelf ingeven', tarief: null },
-];
+// const LEVERANCIERS = [
+//   { naam: 'Engie', tarief: 0.330 }, // easy fixed (vast contract)
+//   { naam: 'Luminus', tarief: 0.341 }, // maxxfix 2jaar (vast contract)
+//   { naam: 'Fluvius', tarief: 0.328 }, // maximumtarief voor midden-vlaanderen
+//   { naam: 'TotalEnergies', tarief: 0.279 }, // elektriciteit VARIABEL
+//   { naam: 'Mega', tarief: 0.287 },  // smart fixed (vast contract)
+//   { naam: 'Eneco', tarief: 0.324 }, // zon & wind vast
+//   { naam: 'Zelf ingeven', tarief: null },
+// ];
+
+let _leveranciers = [];
+let _tariefModus = 'dag';
+
+export async function loadLeveranciers() {
+  try {
+    const res = await fetch('/javascript/data/leveranciers.json');
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    _leveranciers = await res.json();
+  } catch (err) {
+    console.error('Kon leveranciers.json niet laden: ', err);
+    _leveranciers = [{ leverancier: 'Zelf ingeven', contract: null, dagTarief: null, nachtTarief: null, laatsteUpdate: null}];
+  }
+}
+
+export function getTariefModus() {
+  return _tariefModus;
+}
 
 export function initTariefPicker() {
   const badge = document.getElementById('stat-badge-tarief');
@@ -248,6 +266,10 @@ export function initTariefPicker() {
   badge.style.cursor = 'pointer';
   badge.title = 'Klik om tarief te wijzigen';
   badge.addEventListener('click', _openTariefPopup);
+}
+
+function _getActiefTarief(l) {
+  return _tariefModus === 'nacht' ? l.nachtTarief : l.dagTarief;
 }
 
 function _openTariefPopup() {
@@ -258,16 +280,31 @@ function _openTariefPopup() {
   popup.className = 'tarief-popup';
   popup.innerHTML= `
     <div class="tarief-popup-titel">⚡ Kies jouw leverancier</div>
+
     <div class="tarief-popup-lijst">
-      ${LEVERANCIERS.map(l => `
-        <button class="tarief-optie${l.tarief === getTarief() ? ' actief' : ''}"
-                data-tarief="${l.tarief ?? ''}"
-                data-naam="${l.naam}">
-          <span class="tarief-naam">${l.naam}</span>
-          ${l.tarief ? `<span class="tarief-val">€${l.tarief.toFixed(3)}/kWh</span>` : ''}
-        </button>
-      `).join('')}
+      <button class="tarief-modus-btn${_tariefModus === 'dag' ? ' actief' : ''}" data-modus="dag">☀️ Dag</button>
+      <button class="tarief-modus-btn${_tariefModus === 'nacht' ? ' actief' : ''}" data-modus="nacht">🌙 Nacht</button>
     </div>
+
+    <div class="tarief-popup-lijst">
+      ${_leveranciers.map(l => {
+        const tarief = _getActiefTarief(l);
+        return `
+          <button class="tarief-optie${tarief === getTarief() ? ' actief' : ''}"
+                  data-tarief="${tarief ?? ''}"
+                  data-naam="${l.leverancier}">
+            <span class="tarief-naam">${l.leverancier}</span>
+            ${l.contract ? `<span class="tarief-contract">${l.contract}</span>` : ''}
+            ${l.dagTarief ? `
+              <span class="tarief-val">
+                ☀️ €${l.dagTarief.toFixed(3)}
+                ${l.nachtTarief ? `&nbsp;🌙 €${l.nachtTarief.toFixed(3)}` : ''}
+              </span>` : ''}
+          </button>
+        `;
+      }).join('')}
+    </div>
+
     <div id="tarief-eigen-wrap" style="display:none;margin-top:8px;">
       <label style="font-size:.8rem;font-weight:700;display:block;margin-bottom:4px;">
         Jouw tarief (€/kWh)
@@ -279,6 +316,8 @@ function _openTariefPopup() {
         <button id="tarief-eigen-ok" class="tarief-optie" style="padding:6px 14px;">OK</button>
       </div>
     </div>
+
+    ${_getLaatsteUpdateLabel()}
     <button class="tarief-sluit" id="tarief-sluit">✕</button>
   `;
 
@@ -304,8 +343,37 @@ function _openTariefPopup() {
 
   popup.querySelector('#tarief-sluit').addEventListener('click', () => popup.remove());
 
+  // Dag/nacht toggle
+  popup.querySelectorAll('.tarief-modus-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      _tariefModus = btn.dataset.modus;
+
+      // Actieve stijl updaten op de toggle knoppen
+      popup.querySelectorAll('.tarief-modus-btn').forEach(b =>
+        b.classList.toggle('actief', b.dataset.modus === _tariefModus)
+      );
+
+      // Tariefwaarden en data-tarief updaten per leverancier
+      popup.querySelectorAll('.tarief-optie[data-naam]').forEach(optBtn => {
+        const naam = optBtn.dataset.naam;
+        const l = _leveranciers.find(x => x.leverancier === naam);
+        if (!l) return;
+        const tarief = _tariefModus === 'nacht' ? l.nachtTarief : l.dagTarief;
+        optBtn.dataset.tarief = tarief ?? '';
+        optBtn.classList.toggle('actief', tarief === getTarief());
+        const valEl = optBtn.querySelector('.tarief-val');
+        if (valEl && l.dagTarief) {
+          valEl.innerHTML = `☀️ €${l.dagTarief.toFixed(3)}&nbsp;🌙 €${l.nachtTarief?.toFixed(3) ?? '–'}`;
+        }
+      });
+    });
+  });
+
+  // Leverancier kiezen
   popup.querySelectorAll('.tarief-optie[data-naam]').forEach(btn => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
       const naam = btn.dataset.naam;
       const tarief = btn.dataset.tarief;
 
@@ -313,22 +381,34 @@ function _openTariefPopup() {
         popup.querySelector('#tarief-eigen-wrap').style.display = '';
         return;
       }
-      setTarief(tarief);
+      if (!tarief) return;
+      setTarief(parseFloat(tarief));
       _herbereken();
       bijwerkStatsStrip();
       popup.remove();
     });
   });
 
-  popup.querySelector('#tarief-eigen-ok')?.addEventListener('click', () => {
+  popup.querySelector('#tarief-eigen-ok')?.addEventListener('click', (e) => {
+    e.stopPropagation();
     const val = popup.querySelector('#tarief-eigen-inp').value;
-    setTarief(val);
+    setTarief(parseFloat(val));
     _herbereken();
     bijwerkStatsStrip();
     popup.remove();
   });
+}
 
-  
+function _getLaatsteUpdateLabel() {
+  const datums = _leveranciers
+    .map(l => l.laatsteUpdate)
+    .filter(Boolean)
+    .sort()
+    .reverse();
+  if (!datums.length) return '';
+  return `<div style="font-size:.72rem;color:var(--text-muted);margin-top:10px;text-align:right;">
+    Tarieven bijgewerkt op ${datums[0]}
+  </div>`;
 }
 
 function _herbereken() {
