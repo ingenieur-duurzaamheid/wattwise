@@ -2,7 +2,7 @@ import { KAMERS_DATA } from '../data/kamer_data.js';
 import { KAMER_SVG } from './svg_kamer.js';
 import { ICON_BASE } from '../config/icons.js';
 import { KAMER_POSITIES, KAMER_ZOOM } from '../config/app_config.js';
-import { berekeningen, setHuidigKamer, setHuidigToestel, resetNavigatie, getTarief, setTarief, getHuidigKamer } from '../state/app_state.js';
+import { berekeningen, setHuidigKamer, setHuidigToestel, resetNavigatie, getTarief, setTarief, getHuidigKamer, getGeselecteerdeLeverancier, setGeselecteerdeLeverancier } from '../state/app_state.js';
 
 export function initHouse(animatieNaarKamerHandler) {
   const houseWrap = document.getElementById('house-wrap');
@@ -232,18 +232,8 @@ function _bijwerkKamersBadge() {
     : 'kamers<br>nog te verkennen';
 }
 
-// const LEVERANCIERS = [
-//   { naam: 'Engie', tarief: 0.330 }, // easy fixed (vast contract)
-//   { naam: 'Luminus', tarief: 0.341 }, // maxxfix 2jaar (vast contract)
-//   { naam: 'Fluvius', tarief: 0.328 }, // maximumtarief voor midden-vlaanderen
-//   { naam: 'TotalEnergies', tarief: 0.279 }, // elektriciteit VARIABEL
-//   { naam: 'Mega', tarief: 0.287 },  // smart fixed (vast contract)
-//   { naam: 'Eneco', tarief: 0.324 }, // zon & wind vast
-//   { naam: 'Zelf ingeven', tarief: null },
-// ];
-
 let _leveranciers = [];
-let _tariefModus = 'dag';
+let _meterType = 'enkel';
 
 export async function loadLeveranciers() {
   try {
@@ -256,8 +246,8 @@ export async function loadLeveranciers() {
   }
 }
 
-export function getTariefModus() {
-  return _tariefModus;
+function _getContract(l) {
+  return l.contracten?.[_meterType] ?? null;
 }
 
 export function initTariefPicker() {
@@ -268,41 +258,57 @@ export function initTariefPicker() {
   badge.addEventListener('click', _openTariefPopup);
 }
 
-function _getActiefTarief(l) {
-  return _tariefModus === 'nacht' ? l.nachtTarief : l.dagTarief;
-}
 
 function _openTariefPopup() {
   document.getElementById('tarief-popup')?.remove();
 
+  const geselecteerd = getGeselecteerdeLeverancier();
+
   const popup = document.createElement('div');
   popup.id = 'tarief-popup';
   popup.className = 'tarief-popup';
-  popup.innerHTML= `
-    <div class="tarief-popup-titel">⚡ Kies jouw leverancier</div>
+  popup.innerHTML = `
+    <div class="tarief-popup-titel">
+      ⚡ Kies jouw leverancier
+      <span class="param-tooltip tarief-tooltip-trigger">?
+        <span class="tarief-tooltip-inhoud">
+          Tarieven in €/kwh.<br>
+          Er wordt gerekend met een geschatte totaalprijs (exclusief vaste vergoedingen) op basis van het dagtarief voor regio Gent.<br>
+          Dag- en nachttarieven zijn de verbruikskosten exclusief netwerktarieven en taksen.<br>
+          Indien geen nachttarief weergegeven, gaat het om een enkelvoudige meter. Anders betreft het een dubbele meter.
+        </span>
+      </span>
+    </div>
 
-    <div class="tarief-popup-lijst">
-      <button class="tarief-modus-btn${_tariefModus === 'dag' ? ' actief' : ''}" data-modus="dag">☀️ Dag</button>
-      <button class="tarief-modus-btn${_tariefModus === 'nacht' ? ' actief' : ''}" data-modus="nacht">🌙 Nacht</button>
+    <div class="tarief-meter-toggle">
+      <button class="tarief-meter-btn${_meterType === 'enkel' ? ' actief' : ''}" data-meter="enkel">⚡ Enkelvoudig</button>
+      <button class="tarief-meter-btn${_meterType === 'dubbel' ? ' actief' : ''}" data-meter="dubbel">☀️🌙 Dubbel</button>
     </div>
 
     <div class="tarief-popup-lijst">
-      ${_leveranciers.map(l => {
-        const tarief = _getActiefTarief(l);
-        return `
-          <button class="tarief-optie${tarief === getTarief() ? ' actief' : ''}"
-                  data-tarief="${tarief ?? ''}"
-                  data-naam="${l.leverancier}">
-            <span class="tarief-naam">${l.leverancier}</span>
-            ${l.contract ? `<span class="tarief-contract">${l.contract}</span>` : ''}
-            ${l.dagTarief ? `
-              <span class="tarief-val">
-                ☀️ €${l.dagTarief.toFixed(3)}
-                ${l.nachtTarief ? `&nbsp;🌙 €${l.nachtTarief.toFixed(3)}` : ''}
-              </span>` : ''}
-          </button>
-        `;
-      }).join('')}
+      ${_leveranciers
+        .map(l => {
+          const contract = _getContract(l);
+          const verborgen = l.contracten !== null && contract === null;
+          console.log(l.leverancier, 'contract:', contract, 'verborgen:', verborgen, 'meterType:', _meterType);
+          const huidigTarief = parseFloat(getTarief());
+          return `
+            <button class="tarief-optie${l.leverancier === geselecteerd ? ' actief' : ''}${verborgen ? ' verborgen' : ''}"
+                    data-tarief="${contract?.totaalTarief ?? ''}"
+                    data-naam="${l.leverancier}">
+              <span class="tarief-naam">${l.leverancier}</span>
+              ${l.contract ? `<span class="tarief-contract">${l.contract}</span>` : ''}
+              
+                <span class="tarief-val">${contract ? `
+                  ☀️ ${contract.dagTarief?.toFixed(3) ?? '–'}€/kwh
+                  ${contract.nachtTarief ? `&nbsp;🌙 ${contract.nachtTarief.toFixed(3)}€/kwh` : ''}
+                  ${contract.totaalTarief ? `&nbsp;∑ ${contract.totaalTarief.toFixed(3)}€/kwh` : ''}
+                </span>` : ''}
+            </button>
+          `;
+        })
+        .join('')
+      }
     </div>
 
     <div id="tarief-eigen-wrap" style="display:none;margin-top:8px;">
@@ -311,12 +317,11 @@ function _openTariefPopup() {
       </label>
       <div style="display:flex;gap:6px;align-items:center;">
         <input id="tarief-eigen-inp" type="number" min="0.01" max="1"
-               step="0.001" value="${getTarief().toFixed(3)}"
-               style="width:90px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--border);font-size:.9rem;">
+              step="0.001" value="${getTarief().toFixed(3)}"
+              style="width:90px;padding:6px 8px;border-radius:8px;border:1.5px solid var(--border);font-size:.9rem;">
         <button id="tarief-eigen-ok" class="tarief-optie" style="padding:6px 14px;">OK</button>
       </div>
     </div>
-
     ${_getLaatsteUpdateLabel()}
     <button class="tarief-sluit" id="tarief-sluit">✕</button>
   `;
@@ -343,28 +348,37 @@ function _openTariefPopup() {
 
   popup.querySelector('#tarief-sluit').addEventListener('click', () => popup.remove());
 
-  // Dag/nacht toggle
-  popup.querySelectorAll('.tarief-modus-btn').forEach(btn => {
+  // Meter toggle
+  popup.querySelectorAll('.tarief-meter-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
-      _tariefModus = btn.dataset.modus;
+      _meterType = btn.dataset.meter;
 
-      // Actieve stijl updaten op de toggle knoppen
-      popup.querySelectorAll('.tarief-modus-btn').forEach(b =>
-        b.classList.toggle('actief', b.dataset.modus === _tariefModus)
+      popup.querySelectorAll('.tarief-meter-btn').forEach(b =>
+        b.classList.toggle('actief', b.dataset.meter === _meterType)
       );
 
-      // Tariefwaarden en data-tarief updaten per leverancier
       popup.querySelectorAll('.tarief-optie[data-naam]').forEach(optBtn => {
         const naam = optBtn.dataset.naam;
         const l = _leveranciers.find(x => x.leverancier === naam);
         if (!l) return;
-        const tarief = _tariefModus === 'nacht' ? l.nachtTarief : l.dagTarief;
-        optBtn.dataset.tarief = tarief ?? '';
-        optBtn.classList.toggle('actief', tarief === getTarief());
+        const contract = _getContract(l);
+
+        optBtn.classList.remove('verborgen');
+
+        // Verberg knop als contract null is (maar niet voor 'Zelf ingeven')
+        if (l.contracten !== null && contract === null) {
+          optBtn.classList.add('verborgen');
+          return;
+        }
+
+        optBtn.dataset.tarief = contract?.totaalTarief ?? '';
+        optBtn.classList.toggle('actief', l.leverancier === geselecteerd);
         const valEl = optBtn.querySelector('.tarief-val');
-        if (valEl && l.dagTarief) {
-          valEl.innerHTML = `☀️ €${l.dagTarief.toFixed(3)}&nbsp;🌙 €${l.nachtTarief?.toFixed(3) ?? '–'}`;
+        if (valEl && contract) {
+          valEl.innerHTML = `☀️ ${contract.dagTarief?.toFixed(3) ?? '–'}€/kwh${contract.nachtTarief ? `&nbsp;🌙 ${contract.nachtTarief.toFixed(3)}€/kwh` : ''}&nbsp;∑ ${contract.totaalTarief?.toFixed(3) ?? '–'}€/kwh`;
+        } else if (valEl) {
+          valEl.innerHTML = '';
         }
       });
     });
@@ -382,6 +396,7 @@ function _openTariefPopup() {
         return;
       }
       if (!tarief) return;
+      setGeselecteerdeLeverancier(naam);
       setTarief(parseFloat(tarief));
       _herbereken();
       bijwerkStatsStrip();

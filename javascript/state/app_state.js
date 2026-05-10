@@ -3,6 +3,8 @@ export let huidigToestel = null;
 export const berekeningen = {};
 
 export let huidigTarief = 0.28;
+let _geselecteerdeLeverancier = null;
+
 export function setTarief(val) {
   const n = parseFloat(val);
   if (!isNaN(n) && n > 0) huidigTarief = Math.round(n * 1000) / 1000;
@@ -24,6 +26,8 @@ export function resetNavigatie() {
 export function getTarief() { return huidigTarief; }
 export function getHuidigKamer() { return huidigKamer; }
 export function getHuidigToestel() { return huidigToestel; }
+export function getGeselecteerdeLeverancier() { return _geselecteerdeLeverancier; }
+export function setGeselecteerdeLeverancier(naam) { _geselecteerdeLeverancier = naam; }
 
 
 window.resetNavigatie = resetNavigatie;
